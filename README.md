@@ -24,7 +24,10 @@ Bandyer is a young innovative startup that enables audio/video communication and
 Download the [latest JAR](https://bintray.com/bandyer/Communication/Android-Common) or grab via Gradle:
 
 ```groovy
-implementation 'com.bandyer:bandyer-android-common:1.0.0'
+implementation ("com.bandyer:bandyer-android-common:1.0.0") {
+        exclude group: "android.arch.core"
+        exclude group: "android.arch.lifecycle"
+}
 ```
 
 ## Documentation
