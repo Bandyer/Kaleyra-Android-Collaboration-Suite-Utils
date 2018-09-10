@@ -40,7 +40,7 @@ if hasChangesOnMaster == "true":
         "You have not committed some files on the master branch, to proceed commit manually the changes")
 
 #################################################################################
-########################## CHECK DEVELOP CHANGES ################################
+####################### CHECK MASTER COMPILES CORRECTLY #########################
 #################################################################################
 builded = os.system("./gradlew clean assembleRelease")
 if builded != 0:
