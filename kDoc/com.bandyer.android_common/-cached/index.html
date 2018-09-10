@@ -1,0 +1,47 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>Cached - </title>
+<link rel="stylesheet" href="../../style.css">
+</HEAD>
+<BODY>
+<a href="../index.html">com.bandyer.android_common</a>&nbsp;/&nbsp;<a href="./index.html">Cached</a><br/>
+<br/>
+<h1>Cached</h1>
+<code><span class="keyword">interface </span><span class="identifier">Cached</span><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span></code>
+<p>Created by Brian Parma on 2/10/16.</p>
+<p>This is basically just the lazy delegate copy and pasted, then modified so that it can be
+reset by setting it equal to null</p>
+<p>Represents a value with lazy initialization.</p>
+<p>To create an instance use the <a href="../cached.html">cached</a> function.</p>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="value.html">value</a></p>
+</td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">var </span><span class="identifier">value</span><span class="symbol">: </span><a href="index.html#T"><span class="identifier">T</span></a><span class="symbol">?</span></code>
+<p>Gets the lazily initialized value of the current Cached instance.
+Once the value was initialized it must not change during the rest of lifetime of this Cached instance.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="is-cached.html">isCached</a></p>
+</td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">isCached</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code>
+<p>Returns <code>true</code> if a value for this Cached instance has a value, and <code>false</code> otherwise.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

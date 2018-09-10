@@ -1,0 +1,78 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>RoundedView - </title>
+<link rel="stylesheet" href="../../style.css">
+</HEAD>
+<BODY>
+<a href="../index.html">com.bandyer.android_common</a>&nbsp;/&nbsp;<a href="./index.html">RoundedView</a><br/>
+<br/>
+<h1>RoundedView</h1>
+<code><span class="keyword">interface </span><span class="identifier">RoundedView</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../-roundable.html"><span class="identifier">Roundable</span></a></code>
+<p>View that can be rounded</p>
+<p>To be used in java you need to implement all the abstract methods and forward them by RoundedView.DefaultImpl.methods</p>
+<p>For example:</p>
+<pre><code>public class TestButton extends AppCompatImageButton implements RoundedView {
+
+     public TestButton(Context context) {
+          this(context, null);
+     }
+
+     public TestButton(Context context, AttributeSet attrs) {
+         this(context, attrs, 0);
+     }
+
+     public TestButton(Context context, AttributeSet attrs, int defStyleAttr) {
+         super(context, attrs, defStyleAttr);
+         round(this, true);
+     }
+
+     @Override
+     protected void onDraw(Canvas canvas) {
+         super.onDraw(canvas);
+         setRoundClip(this, canvas);
+     }
+
+     @Override
+     public &lt;T extends View &amp; Roundable&gt; void setRoundClip(@NotNull T $receiver, @Nullable Canvas canvas) {
+         RoundedView.DefaultImpls.setRoundClip(this, $receiver, canvas);
+     }
+
+     @Override
+     public &lt;T extends View &amp; Roundable&gt; void round(@NotNull T $receiver, boolean rounded) {
+         RoundedView.DefaultImpls.round(this, $receiver, rounded);
+     }
+
+     @Override
+     public &lt;T extends View &amp; Roundable&gt; void setCornerRadius(@NotNull T $receiver, float radius) {
+         RoundedView.DefaultImpls.setCornerRadius(this, $receiver, radius);
+     }
+}
+</code></pre>
+<p><strong>Author</strong><br/>
+kristiyan</p>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="round.html">round</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span> <a href="round.html#T"><span class="identifier">T</span></a><span class="symbol">.</span><span class="identifier">round</span><span class="symbol">(</span><span class="identifier" id="com.bandyer.android_common.RoundedView$round(com.bandyer.android_common.RoundedView.round.T, kotlin.Boolean)/rounded">rounded</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a><span class="keyword"> where </span><span class="identifier">T</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/view/View.html"><span class="identifier">View</span></a><span class="symbol">, </span><span class="identifier">T</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../-roundable.html"><span class="identifier">Roundable</span></a></code>
+<p>Enable circular clipping on canvas for RoundedView</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="set-corner-radius.html">setCornerRadius</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span> <a href="set-corner-radius.html#T"><span class="identifier">T</span></a><span class="symbol">.</span><span class="identifier">setCornerRadius</span><span class="symbol">(</span><span class="identifier" id="com.bandyer.android_common.RoundedView$setCornerRadius(com.bandyer.android_common.RoundedView.setCornerRadius.T, kotlin.Float)/radius">radius</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html"><span class="identifier">Float</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a><span class="keyword"> where </span><span class="identifier">T</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/view/View.html"><span class="identifier">View</span></a><span class="symbol">, </span><span class="identifier">T</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../-roundable.html"><span class="identifier">Roundable</span></a></code>
+<p>Enable radius clipping on canvas for RoundedView</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>
