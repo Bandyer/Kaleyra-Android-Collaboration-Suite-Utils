@@ -1,0 +1,47 @@
+apply plugin: 'com.android.application'
+
+def supportTestVersion = "1.0.2"
+def espressoVersion = "3.0.2"
+
+android {
+    compileSdkVersion sdkVersion
+    buildToolsVersion buildToolsVersion
+    defaultConfig {
+        applicationId "com.bandyer.demo_app"
+        minSdkVersion 16
+        targetSdkVersion sdkVersion
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+
+    /*** Platform ***/
+    implementation "com.android.support:appcompat-v7:$supportLibVersion"
+    implementation "com.android.support:design:$supportLibVersion"
+    implementation "com.android.support:recyclerview-v7:$supportLibVersion"
+
+    /***  Testing ***/
+    testImplementation 'junit:junit:4.12'
+
+    androidTestImplementation "com.android.support.test:runner:${supportTestVersion}"
+    androidTestImplementation 'org.mockito:mockito-android:2.+'
+    androidTestImplementation("com.android.support.test.espresso:espresso-core:${espressoVersion}", {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+
+    /*** Library ***/
+    implementation(project(":bandyer-android-common")) {
+        exclude group: "android.arch.core"
+        exclude group: "android.arch.lifecycle"
+    }
+}

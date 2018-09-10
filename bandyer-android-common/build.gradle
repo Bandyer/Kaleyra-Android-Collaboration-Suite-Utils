@@ -1,0 +1,222 @@
+apply plugin: 'com.android.library'
+apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'com.jfrog.bintray'
+apply plugin: "kotlin-android"
+apply plugin: "kotlin-android-extensions"
+apply plugin: 'org.jetbrains.dokka-android'
+apply plugin: "kotlin-kapt"
+
+
+def gitHubUsername = "Bandyer"
+def gitHubProjectName = "Android-Common"
+
+// init - do not modify this if your project is on github
+def siteUrl = "https://github.com/${gitHubUsername}/${gitHubProjectName}"
+def gitUrl = siteUrl + '.git'
+def bugTrackerUrl = siteUrl + '/issues/'
+def projectName = gitHubProjectName
+// end - do not modify this if your project is on github
+
+def projectDesc = "This library is the Bandyer's commons for android."
+def projectGroup = "com.bandyer"
+def projectOrg = "bandyer"
+def projectLicenses = ["Apache-2.0"]
+def projectLicenseUrl = "https://github.com/${gitHubUsername}/${gitHubProjectName}/LICENSE.txt"
+def projectKeywords = ['chat', 'communication', 'android', 'video', 'conference', 'helpdesk', 'bandyer', 'webrtc', 'call', 'audio']
+def developerFullName = "Bandyer Srl"
+group = projectGroup
+version = "1.0.0"
+
+def weakHandler_version = "1.1"
+def supportTestVersion = "1.0.2"
+def espressoVersion = "3.0.2"
+
+android {
+    compileSdkVersion sdkVersion
+    buildToolsVersion buildToolsVersion
+    defaultConfig {
+        minSdkVersion 16
+        targetSdkVersion sdkVersion
+        versionCode 1
+        versionName version
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    lintOptions {
+        warning 'InvalidPackage'
+    }
+
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
+}
+
+kapt {
+    mapDiagnosticLocations = true
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+
+    /*** Platform ***/
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation("com.android.support:appcompat-v7:$supportLibVersion") {
+        exclude group: 'com.android.support', module: 'animated-vector-drawable'
+        exclude group: 'com.android.support', module: 'support-vector-drawable'
+    }
+
+    /*** Lifecycle ***/
+    implementation "android.arch.lifecycle:runtime:$lifecycle_version"
+    kapt "android.arch.lifecycle:compiler:$lifecycle_version"
+
+    /*** Testing ***/
+    testImplementation 'junit:junit:4.12'
+    testImplementation 'io.mockk:mockk:1.8.7'
+
+    androidTestImplementation "com.android.support.test:runner:${supportTestVersion}"
+    androidTestImplementation 'org.mockito:mockito-android:2.+'
+    androidTestImplementation("com.android.support.test.espresso:espresso-core:${espressoVersion}", {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+
+    /*** Other Dependencies ***/
+    api "com.badoo.mobile:android-weak-handler:$weakHandler_version"
+}
+
+
+Properties properties = new Properties()
+if (project.rootProject.file("local.properties").exists()) {
+    properties.load(project.rootProject.file('local.properties').newDataInputStream())
+}
+
+install {
+    repositories.mavenInstaller {
+        pom.project {
+            name projectName
+            description projectDesc
+            packaging 'aar'
+            groupId projectGroup
+            version version
+            url siteUrl
+            licenses {
+                license {
+                    name projectLicenses[0]
+                    url projectLicenseUrl
+                }
+            }
+            developers {
+                developer {
+                    id properties.getProperty("bintray.user")
+                    name developerFullName
+                }
+            }
+            scm {
+                connection gitUrl
+                developerConnection gitUrl
+                url siteUrl
+
+            }
+        }
+    }
+}
+
+bintray {
+    user = properties.getProperty("bintray.user")
+    key = properties.getProperty("bintray.apikey")
+    configurations = ['archives']
+    override = true
+//    dryRun = true
+    pkg {
+        repo = "Communication"
+        name = projectName
+        userOrg = projectOrg
+        desc = projectDesc
+        websiteUrl = siteUrl
+        vcsUrl = gitUrl
+        issueTrackerUrl = bugTrackerUrl
+        licenses = projectLicenses
+        labels = projectKeywords
+        publicDownloadNumbers = true
+        publish = true
+    }
+}
+
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier = 'sources'
+}
+
+task dokkaDoc() {
+    dependsOn createApiDoc("genJavaDoc", "html", "$buildDir/kDoc")
+    dependsOn createApiDoc("genKDoc", "javadoc", "$buildDir/jDoc")
+}
+
+task publishDocs(type: Exec) {
+    workingDir '../scripts'
+    commandLine 'python', './publish_doc.py', "$projectGroup", "${project.name}", "$version"
+}
+
+def createApiDoc(def name, def format, def dir) {
+    return tasks.create(name, org.jetbrains.dokka.gradle.DokkaAndroidTask) {
+        outputFormat = format
+        outputDirectory = dir
+        skipEmptyPackages = true // Do not create index pages for empty packages
+    }
+}
+
+task jdocJar(type: Jar, dependsOn: dokkaDoc) {
+    classifier = 'javadoc'
+    from "$buildDir/jDoc"
+}
+
+task kdocJar(type: Jar, dependsOn: dokkaDoc) {
+    classifier = 'kdoc'
+    from "$buildDir/kDoc"
+}
+
+artifacts {
+    archives kdocJar
+    archives jdocJar
+    archives sourcesJar
+}
+
+//////////////////////// ADD LICENSE IN AAR //////////////////////////////////
+def projName = name
+def outputAarDir = file('build/outputs/aar')
+def outputAarUnzipedDir = file('build/outputs/aar/unziped')
+def aarReleaseFile = file('build/outputs/aar/' + projName + '-release.aar')
+
+task unzipAar(type: Copy) {
+    from zipTree(aarReleaseFile)
+    into outputAarUnzipedDir
+}
+
+task addLicenseFileInUnzipedAar(type: Copy, dependsOn: 'unzipAar') {
+    from file("../")
+    into outputAarUnzipedDir
+    include 'LICENSE.txt', 'THIRD-PARTY_LICENSES.txt'
+}
+
+task reZipAar(type: Zip, dependsOn: 'addLicenseFileInUnzipedAar') {
+    from outputAarUnzipedDir
+    includeEmptyDirs = false
+    include '*'
+    include '*/*'
+    include '*/*/*'
+    archiveName projName + '-release.aar'
+    destinationDir(outputAarDir)
+    doLast {
+        outputAarUnzipedDir.deleteDir()
+    }
+}
+
+afterEvaluate {
+    bundleReleaseAar.finalizedBy(reZipAar)
+}

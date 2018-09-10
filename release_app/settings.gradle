@@ -1,0 +1,2 @@
+include ':demo_app'
+project(':demo_app').projectDir = file('demo_app/app')
