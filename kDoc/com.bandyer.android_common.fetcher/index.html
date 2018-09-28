@@ -1,0 +1,111 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>com.bandyer.android_common.fetcher - </title>
+<link rel="stylesheet" href="../style.css">
+</HEAD>
+<BODY>
+<a href="./index.html">com.bandyer.android_common.fetcher</a><br/>
+<br/>
+<h2>Package com.bandyer.android_common.fetcher</h2>
+<h3>Types</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-on-user-image-fetcher-observer/index.html">OnUserImageFetcherObserver</a></p>
+</td>
+<td>
+<code><span class="keyword">interface </span><span class="identifier">OnUserImageFetcherObserver</span></code>
+<p>Interface that must be called on users mapped from users aliases.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-on-user-information-fetcher-observer/index.html">OnUserInformationFetcherObserver</a></p>
+</td>
+<td>
+<code><span class="keyword">interface </span><span class="identifier">OnUserInformationFetcherObserver</span></code>
+<p>Interface that must be called on user mapped from user aliases.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-user-display-info/index.html">UserDisplayInfo</a></p>
+</td>
+<td>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">UserDisplayInfo</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/java/io/Serializable.html"><span class="identifier">Serializable</span></a></code>
+<p>This class represents some user display info.
+A user can be represented with the following info:</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-user-display-info-formatter/index.html">UserDisplayInfoFormatter</a></p>
+</td>
+<td>
+<code><span class="keyword">interface </span><span class="identifier">UserDisplayInfoFormatter</span></code>
+<p>UserDisplayInfoFormatter interface is used to customize how a user is displayed with a UserDisplayInfo object.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-user-display-info-formatter-impl/index.html">UserDisplayInfoFormatterImpl</a></p>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">UserDisplayInfoFormatterImpl</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-user-display-info-formatter/index.html"><span class="identifier">UserDisplayInfoFormatter</span></a></code>
+<p>UserDisplayInfoFormatter default Implementation</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-user-image-bitmap-display-info/index.html">UserImageBitmapDisplayInfo</a></p>
+</td>
+<td>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">UserImageBitmapDisplayInfo</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-user-image-display-info/index.html"><span class="identifier">UserImageDisplayInfo</span></a></code>
+<p>User Image Display Info by bitmap</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-user-image-display-info/index.html">UserImageDisplayInfo</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">class </span><span class="identifier">UserImageDisplayInfo</span></code>
+<p>This class represents some user visual display info.
+A user image display info can be created with a bitmap or valid url to retrieve image or a valid resId.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-user-image-res-id-display-info/index.html">UserImageResIdDisplayInfo</a></p>
+</td>
+<td>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">UserImageResIdDisplayInfo</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-user-image-display-info/index.html"><span class="identifier">UserImageDisplayInfo</span></a></code>
+<p>User Image Display Info by resId</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-user-image-url-display-info/index.html">UserImageUrlDisplayInfo</a></p>
+</td>
+<td>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">UserImageUrlDisplayInfo</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-user-image-display-info/index.html"><span class="identifier">UserImageDisplayInfo</span></a></code>
+<p>User Image Display Info by url</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-user-information-fetcher/index.html">UserInformationFetcher</a></p>
+</td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">class </span><span class="identifier">UserInformationFetcher</span></code>
+<p>Utility class to be user to map user alias with a class representation of a user.
+Load your user synchronously or asynchronously and return result on the OnUserFetcherObserver provided interface
+as an HashMap&lt;String, BaseUser&gt; of alias mapped with BaseUser class.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

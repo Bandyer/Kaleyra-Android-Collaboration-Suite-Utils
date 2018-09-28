@@ -1,4 +1,5 @@
 com.bandyer.android_common
 com.bandyer.android_common.extensions
+com.bandyer.android_common.fetcher
 com.bandyer.android_common.logging
 com.bandyer.android_common.proximity_listener

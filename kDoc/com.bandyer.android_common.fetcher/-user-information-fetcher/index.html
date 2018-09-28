@@ -1,0 +1,55 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>UserInformationFetcher - </title>
+<link rel="stylesheet" href="../../style.css">
+</HEAD>
+<BODY>
+<a href="../index.html">com.bandyer.android_common.fetcher</a>&nbsp;/&nbsp;<a href="./index.html">UserInformationFetcher</a><br/>
+<br/>
+<h1>UserInformationFetcher</h1>
+<code><span class="keyword">abstract</span> <span class="keyword">class </span><span class="identifier">UserInformationFetcher</span></code>
+<p>Utility class to be user to map user alias with a class representation of a user.
+Load your user synchronously or asynchronously and return result on the OnUserFetcherObserver provided interface
+as an HashMap&lt;String, BaseUser&gt; of alias mapped with BaseUser class.</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-init-.html">&lt;init&gt;</a></p>
+</td>
+<td>
+<code><span class="identifier">UserInformationFetcher</span><span class="symbol">(</span><span class="symbol">)</span></code>
+<p>Utility class to be user to map user alias with a class representation of a user.
+Load your user synchronously or asynchronously and return result on the OnUserFetcherObserver provided interface
+as an HashMap&lt;String, BaseUser&gt; of alias mapped with BaseUser class.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="fetch-user.html">fetchUser</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">fetchUser</span><span class="symbol">(</span><span class="identifier" id="com.bandyer.android_common.fetcher.UserInformationFetcher$fetchUser(kotlin.String, com.bandyer.android_common.fetcher.OnUserInformationFetcherObserver)/userAlias">userAlias</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="com.bandyer.android_common.fetcher.UserInformationFetcher$fetchUser(kotlin.String, com.bandyer.android_common.fetcher.OnUserInformationFetcherObserver)/onUserInformationFetcherObserver">onUserInformationFetcherObserver</span><span class="symbol">:</span>&nbsp;<a href="../-on-user-information-fetcher-observer/index.html"><span class="identifier">OnUserInformationFetcherObserver</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Load your user synchronously or asynchronously and return result on the OnUserFetcherObserver provided interface</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="fetch-user-image.html">fetchUserImage</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">fetchUserImage</span><span class="symbol">(</span><span class="identifier" id="com.bandyer.android_common.fetcher.UserInformationFetcher$fetchUserImage(kotlin.String, com.bandyer.android_common.fetcher.OnUserImageFetcherObserver)/userAlias">userAlias</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="com.bandyer.android_common.fetcher.UserInformationFetcher$fetchUserImage(kotlin.String, com.bandyer.android_common.fetcher.OnUserImageFetcherObserver)/onUserImageFetcherObserver">onUserImageFetcherObserver</span><span class="symbol">:</span>&nbsp;<a href="../-on-user-image-fetcher-observer/index.html"><span class="identifier">OnUserImageFetcherObserver</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Load your users' images synchronously or asynchronously and return result on the OnUserFetcherObserver provided interface</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>
