@@ -25,7 +25,7 @@ def projectLicenseUrl = "https://github.com/${gitHubUsername}/${gitHubProjectNam
 def projectKeywords = ['chat', 'communication', 'android', 'video', 'conference', 'helpdesk', 'bandyer', 'webrtc', 'call', 'audio']
 def developerFullName = "Bandyer Srl"
 group = projectGroup
-version = "1.0.0"
+version = "1.0.1"
 
 def weakHandler_version = "1.1"
 def supportTestVersion = "1.0.2"
