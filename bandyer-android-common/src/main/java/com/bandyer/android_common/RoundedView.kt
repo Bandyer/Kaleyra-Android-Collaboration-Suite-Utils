@@ -69,7 +69,6 @@ interface RoundedView : Roundable {
      * @suppress
      * @receiver View class implementing this interface
      * @param canvas Canvas to modify
-     * @since v1.0.8
      */
     fun <T> T.setRoundClip(canvas: Canvas?) where T : View, T : Roundable {
         if (radius < 0)
@@ -93,7 +92,6 @@ interface RoundedView : Roundable {
      * Enable radius clipping on canvas for RoundedView
      *
      * @param radius radius value in pixels
-     * @since v1.0.8
      */
     fun <T> T.setCornerRadius(radius: Float) where T : View, T : Roundable {
         this.radius = radius
@@ -101,6 +99,24 @@ interface RoundedView : Roundable {
             calculateClippingRectAndApplyClipPath()
         }
         setOutlineRadius(radius)
+    }
+
+    /**
+     * Enable circular clipping on canvas for RoundedView
+     *
+     * @param rounded enable or disable circular clipping
+     */
+    fun <T> round(rounded: Boolean) where T : View, T : Roundable {
+        (this as T).round(true)
+    }
+
+    /**
+     * Enable radius clipping on canvas for RoundedView
+     *
+     * @param radius radius value in pixels
+     */
+    fun <T> setCornerRadius(radius: Float) where T : View, T : Roundable {
+        (this as T).setCornerRadius(radius)
     }
 
 }

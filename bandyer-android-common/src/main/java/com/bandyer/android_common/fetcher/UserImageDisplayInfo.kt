@@ -5,10 +5,7 @@ import android.graphics.Bitmap
 /**
  * This class represents some user visual display info.
  * A user image display info can be created with a bitmap or valid url to retrieve image or a valid resId.
- * @property userAlias user associated user alias.
- * @property resId bundle resId representing user.
- * @property imageUrl image url representing user.
- * @property imageBitmap image bitmap representing user.
+ * @property alias user associated user alias.
  * @constructor
  */
 open class UserImageDisplayInfo internal constructor(val alias: String) {
@@ -20,6 +17,7 @@ open class UserImageDisplayInfo internal constructor(val alias: String) {
      * @property resId Int?
      * @property imageUrl String?
      * @property imageBitmap Bitmap?
+     * @constructor
      */
     class Builder(private var userAlias: String) {
 
@@ -89,6 +87,26 @@ open class UserImageDisplayInfo internal constructor(val alias: String) {
     }
 }
 
+/**
+ * User Image Display Info by bitmap
+ * @property userAlias String
+ * @property bitmap Bitmap
+ * @constructor
+ */
 data class UserImageBitmapDisplayInfo(val userAlias:String, val bitmap: Bitmap): UserImageDisplayInfo(userAlias)
+
+/**
+ * User Image Display Info by url
+ * @property userAlias String
+ * @property url String
+ * @constructor
+ */
 data class UserImageUrlDisplayInfo(val userAlias:String, val url: String): UserImageDisplayInfo(userAlias)
+
+/**
+ * User Image Display Info by resId
+ * @property userAlias String
+ * @property resId Int
+ * @constructor
+ */
 data class UserImageResIdDisplayInfo(val userAlias:String, val resId: Int): UserImageDisplayInfo(userAlias)

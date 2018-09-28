@@ -8,11 +8,14 @@ interface UserDisplayInfoFormatter  {
      * Customize how to print and display user info returning desired string concatenation as the following example:
      * return userDisplayInfo.getFirstName() + " " + userDisplayInfo.getLastName();
      * @param userDisplayInfo UserDisplayInfo
-     * @return String
+     * @return String the formatted user
      */
     fun format(userDisplayInfo: UserDisplayInfo): String
 }
 
+/**
+ * UserDisplayInfoFormatter default Implementation
+ */
 class UserDisplayInfoFormatterImpl: UserDisplayInfoFormatter {
 
     override fun format(userDisplayInfo: UserDisplayInfo): String {
@@ -22,15 +25,11 @@ class UserDisplayInfoFormatterImpl: UserDisplayInfoFormatter {
         val nickname = userDisplayInfo.nickName ?: ""
         val email = userDisplayInfo.nickName ?: ""
 
-        return if(firstName.isNotEmpty() || lastName.isNotEmpty()) {
-            "$firstName $lastName"
+        return when {
+            firstName.isNotEmpty() || lastName.isNotEmpty() -> "$firstName $lastName"
+            nickname.isNotEmpty() -> nickname
+            email.isNotEmpty() -> email
+            else -> ""
         }
-        else if(nickname.isNotEmpty()) {
-            nickname
-        }
-        else if(email.isNotEmpty()) {
-            email
-        }
-        else ""
     }
 }

@@ -23,6 +23,7 @@ import java.lang.ref.WeakReference
 import java.util.*
 
 /**
+ * @suppress
  * Implements a combination of WeakHashMap and IdentityHashMap.
  * Useful for caches that need to key off of a == comparison
  * instead of a .equals.
@@ -35,8 +36,16 @@ import java.util.*
  *
  * Note that this implementation is not synchronized.
  *
+ * @param K key
+ * @param V value
+ * @property queue ReferenceQueue<K> queue of keys
+ * @property backingStore HashMap<IdentityWeakReference<K, V>, V>
+ * @property entries MutableSet<MutableEntry<K, V>>
+ * @property keys MutableSet<K>
+ * @property size Int
+ * @property values MutableCollection<V>
  */
-internal class WeakIdentityHashMap<K, V> : MutableMap<K, V> {
+class WeakIdentityHashMap<K, V> : MutableMap<K, V> {
 
     private val queue = ReferenceQueue<K>()
     private val backingStore = HashMap<IdentityWeakReference, V>()
