@@ -29,7 +29,7 @@ class UserDisplayInfoFormatterImpl: UserDisplayInfoFormatter {
             firstName.isNotEmpty() || lastName.isNotEmpty() -> "$firstName $lastName"
             nickname.isNotEmpty() -> nickname
             email.isNotEmpty() -> email
-            else -> ""
+            else -> userDisplayInfo.userAlias
         }
     }
 }
