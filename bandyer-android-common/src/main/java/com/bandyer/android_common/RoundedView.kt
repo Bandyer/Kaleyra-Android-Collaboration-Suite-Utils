@@ -107,7 +107,7 @@ interface RoundedView : Roundable {
      * @param rounded enable or disable circular clipping
      */
     fun <T> round(rounded: Boolean) where T : View, T : Roundable {
-        (this as T).round(true)
+        (this as T).round(rounded)
     }
 
     /**
