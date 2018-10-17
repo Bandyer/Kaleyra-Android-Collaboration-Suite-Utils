@@ -97,7 +97,6 @@ interface RoundedView : Roundable {
      * @param rounded enable or disable circular clipping
      */
     fun <T> T.round(rounded: Boolean) where T : View, T : Roundable {
-        setLayerType(View.LAYER_TYPE_SOFTWARE, null)
         this@round.isRounded = rounded
         post {
             setCornerRadius(if (!rounded) 0f else min(width, height) / 2f)
@@ -110,7 +109,6 @@ interface RoundedView : Roundable {
      * @param radius radius value in pixels
      */
     fun <T> T.setCornerRadius(radius: Float) where T : View, T : Roundable {
-        setLayerType(View.LAYER_TYPE_SOFTWARE, null)
         this.radius = radius
         addOnLayoutChangeListener { _, _, _, _, _, _, _, _, _ ->
             calculateClippingRectAndApplyClipPath()
