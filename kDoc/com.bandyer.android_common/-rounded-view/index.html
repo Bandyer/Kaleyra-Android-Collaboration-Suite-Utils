@@ -10,6 +10,8 @@
 <h1>RoundedView</h1>
 <code><span class="keyword">interface </span><span class="identifier">RoundedView</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../-roundable.html"><span class="identifier">Roundable</span></a></code>
 <p>View that can be rounded</p>
+<p>!--- IMPORTANT ---!
+On devices below LOLLIPOP the round can not be applied to backgrounds!!</p>
 <p>To be used in java you need to implement all the abstract methods and forward them by RoundedView.DefaultImpl.methods</p>
 <p>For example:</p>
 <pre><code>public class TestButton extends AppCompatImageButton implements RoundedView {
@@ -29,25 +31,34 @@
 
      @Override
      protected void onDraw(Canvas canvas) {
-         super.onDraw(canvas);
          setRoundClip(this, canvas);
+         super.onDraw(canvas); // IMPORTANT call this after setRoundClip
      }
 
      @Override
-     public &lt;T extends View &amp; Roundable&gt; void setRoundClip(@NotNull T $receiver, @Nullable Canvas canvas) {
-         RoundedView.DefaultImpls.setRoundClip(this, $receiver, canvas);
+     public &lt;T extends View &amp; Roundable&gt; void setRoundClip(T $receiver, Canvas canvas) {
+         RoundedView.DefaultImpls.setRoundClip(this, this, canvas);
      }
 
      @Override
-     public &lt;T extends View &amp; Roundable&gt; void round(@NotNull T $receiver, boolean rounded) {
-         RoundedView.DefaultImpls.round(this, $receiver, rounded);
+     public &lt;T extends View &amp; Roundable&gt; void round(T $receiver, boolean rounded) {
+         RoundedView.DefaultImpls.round(this, this, rounded);
      }
 
      @Override
-     public &lt;T extends View &amp; Roundable&gt; void setCornerRadius(@NotNull T $receiver, float radius) {
-         RoundedView.DefaultImpls.setCornerRadius(this, $receiver, radius);
+     public &lt;T extends View &amp; Roundable&gt; void setCornerRadius(T $receiver, float radius) {
+         RoundedView.DefaultImpls.setCornerRadius(this, this, radius);
      }
-}
+
+     @Override
+     public &lt;T extends View &amp; Roundable&gt; void round(boolean rounded) {
+         RoundedView.DefaultImpls.round(this, rounded);
+     }
+
+     @Override
+     public &lt;T extends View &amp; Roundable&gt; void setCornerRadius(float radius) {
+         RoundedView.DefaultImpls.setCornerRadius(this, radius);
+     }
 </code></pre>
 <p><strong>Author</strong><br/>
 kristiyan</p>
