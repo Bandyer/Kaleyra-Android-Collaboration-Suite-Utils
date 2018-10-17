@@ -1,8 +1,10 @@
 package com.bandyer.android_common
 
 import android.graphics.*
+import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.support.annotation.RequiresApi
+import android.util.Log
 import android.view.View
 import android.view.ViewOutlineProvider
 import kotlin.math.min
@@ -14,6 +16,9 @@ interface Roundable
 
 /**
  * View that can be rounded
+ *
+ * !--- IMPORTANT ---!
+ * On devices below LOLLIPOP the round can not be applied to backgrounds!!
  *
  * To be used in java you need to implement all the abstract methods and forward them by RoundedView.DefaultImpl.methods
  *
@@ -38,25 +43,34 @@ interface Roundable
  *
  *      @Override
  *      protected void onDraw(Canvas canvas) {
- *          super.onDraw(canvas);
  *          setRoundClip(this, canvas);
+ *          super.onDraw(canvas); // IMPORTANT call this after setRoundClip
  *      }
  *
  *      @Override
- *      public <T extends View & Roundable> void setRoundClip(@NotNull T $receiver, @Nullable Canvas canvas) {
- *          RoundedView.DefaultImpls.setRoundClip(this, $receiver, canvas);
+ *      public <T extends View & Roundable> void setRoundClip(T $receiver, Canvas canvas) {
+ *          RoundedView.DefaultImpls.setRoundClip(this, this, canvas);
  *      }
  *
  *      @Override
- *      public <T extends View & Roundable> void round(@NotNull T $receiver, boolean rounded) {
- *          RoundedView.DefaultImpls.round(this, $receiver, rounded);
+ *      public <T extends View & Roundable> void round(T $receiver, boolean rounded) {
+ *          RoundedView.DefaultImpls.round(this, this, rounded);
  *      }
  *
  *      @Override
- *      public <T extends View & Roundable> void setCornerRadius(@NotNull T $receiver, float radius) {
- *          RoundedView.DefaultImpls.setCornerRadius(this, $receiver, radius);
+ *      public <T extends View & Roundable> void setCornerRadius(T $receiver, float radius) {
+ *          RoundedView.DefaultImpls.setCornerRadius(this, this, radius);
  *      }
- * }
+ *
+ *      @Override
+ *      public <T extends View & Roundable> void round(boolean rounded) {
+ *          RoundedView.DefaultImpls.round(this, rounded);
+ *      }
+ *
+ *      @Override
+ *      public <T extends View & Roundable> void setCornerRadius(float radius) {
+ *          RoundedView.DefaultImpls.setCornerRadius(this, radius);
+ *      }
  *```
  *
  * @author kristiyan
@@ -65,6 +79,7 @@ interface RoundedView : Roundable {
 
     /**
      * Method to call in onDraw(canvas) of the view implementing this interface
+     * Remember to call super.onDraw(canvas); after it!
      *
      * @suppress
      * @receiver View class implementing this interface
@@ -82,6 +97,7 @@ interface RoundedView : Roundable {
      * @param rounded enable or disable circular clipping
      */
     fun <T> T.round(rounded: Boolean) where T : View, T : Roundable {
+        setLayerType(View.LAYER_TYPE_SOFTWARE, null)
         this@round.isRounded = rounded
         post {
             setCornerRadius(if (!rounded) 0f else min(width, height) / 2f)
@@ -94,6 +110,7 @@ interface RoundedView : Roundable {
      * @param radius radius value in pixels
      */
     fun <T> T.setCornerRadius(radius: Float) where T : View, T : Roundable {
+        setLayerType(View.LAYER_TYPE_SOFTWARE, null)
         this.radius = radius
         addOnLayoutChangeListener { _, _, _, _, _, _, _, _, _ ->
             calculateClippingRectAndApplyClipPath()
@@ -167,7 +184,7 @@ private fun <T> T.setOutlineRadiusApi21(radius: Float) where T : android.view.Vi
  * @param radius radius value in pixels
  */
 private fun <T> T.setOutlineRadiusCompat(radius: Float) where T : View, T : Roundable {
-    setBackgroundColor(Color.TRANSPARENT)
+    if (background != null) Log.e("RoundedView", "RoundedView does not support backgrounds on api below LOLLIPOP!")
     calculateClippingRectAndApplyClipPathCompat(radius)
 }
 
