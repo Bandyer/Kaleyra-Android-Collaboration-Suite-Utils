@@ -1,8 +1,7 @@
-
-
 package com.bandyer.android_common.logging
 
 import android.os.Build
+import android.support.annotation.NonNull
 import android.support.annotation.Nullable
 import com.bandyer.android_common.BuildConfig
 import com.bandyer.android_common.logging.BaseLogger.Priority.DEBUG
@@ -11,7 +10,6 @@ import com.bandyer.android_common.logging.BaseLogger.Priority.INFO
 import com.bandyer.android_common.logging.BaseLogger.Priority.LogPriority
 import com.bandyer.android_common.logging.BaseLogger.Priority.VERBOSE
 import com.bandyer.android_common.logging.BaseLogger.Priority.WARN
-import org.jetbrains.annotations.NotNull
 import java.util.regex.Pattern
 
 
@@ -128,7 +126,7 @@ abstract class PriorityLogger(@LogPriority val priority: Int = VERBOSE) : BaseLo
      * Note: This will not be called if a [manual tag][.tag] was specified.
      */
     @Nullable
-    private fun createStackElementTag(@NotNull element: StackTraceElement): String {
+    private fun createStackElementTag(@NonNull element: StackTraceElement): String {
         var tag = element.className
         val m = ANONYMOUS_CLASS.matcher(tag)
         if (m.find()) {
