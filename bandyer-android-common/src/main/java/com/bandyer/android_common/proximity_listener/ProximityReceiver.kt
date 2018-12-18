@@ -22,20 +22,17 @@ import java.lang.ref.WeakReference
  *
  * @param proximitySensorListener proximity sensor listener to notify when a change occurred.
  */
-internal class ProximityReceiver constructor(context: AppCompatActivity?, private var proximitySensorListener: ProximitySensorListener, override var debounceMillis: Long = 500) : ProximitySensor, SensorEventListener, LifecycleEvents {
+internal class ProximityReceiver constructor(var context: AppCompatActivity?, private var proximitySensorListener: ProximitySensorListener, override var debounceMillis: Long = 500) : ProximitySensor, SensorEventListener, LifecycleEvents {
 
-    private val mContext = WeakReference<AppCompatActivity>(context)
-
-    private val DEFAULT_BATCH_LATENCY = 1000000
+    private val DEFAULT_BATCH_LATENCY = 190000
 
     private var lastEvent: SensorEvent? = null
     private var isTimerRunning = false
 
     internal var sensorManager by cached {
-        val hasProximitySensor = mContext.get()?.packageManager?.hasSystemFeature(PackageManager.FEATURE_SENSOR_PROXIMITY)
-        if (hasProximitySensor == true)
-            return@cached mContext.get()?.getSystemService(Context.SENSOR_SERVICE) as? SensorManager
-        return@cached null
+        val hasProximitySensor = context?.packageManager?.hasSystemFeature(PackageManager.FEATURE_SENSOR_PROXIMITY)
+        if (hasProximitySensor == false) return@cached null
+        return@cached context!!.getSystemService(Context.SENSOR_SERVICE) as? SensorManager
     }
 
     private var proximitySensor by cached {
@@ -49,6 +46,14 @@ internal class ProximityReceiver constructor(context: AppCompatActivity?, privat
      */
     init {
         LifecyleBinder.bind(context!!, this)
+
+    }
+
+    override fun create() {}
+
+    override fun start() {}
+
+    override fun resume() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             sensorManager?.registerListener(this, proximitySensor, SensorManager.SENSOR_DELAY_NORMAL, DEFAULT_BATCH_LATENCY)
         } else {
@@ -56,24 +61,19 @@ internal class ProximityReceiver constructor(context: AppCompatActivity?, privat
         }
     }
 
-    override fun create() {}
-
-    override fun start() {}
-
-    override fun resume() {}
-
     override fun stop() {}
 
     override fun destroy() {
         checkMainThread()
-        sensorManager?.unregisterListener(this, proximitySensor)
-        mContext.clear()
+        context = null
         sensorManager = null
         proximitySensor = null
         timer.cancel()
     }
 
-    override fun pause() {}
+    override fun pause() {
+        sensorManager?.unregisterListener(this, proximitySensor)
+    }
 
     override fun isNear(): Boolean {
         checkMainThread()
