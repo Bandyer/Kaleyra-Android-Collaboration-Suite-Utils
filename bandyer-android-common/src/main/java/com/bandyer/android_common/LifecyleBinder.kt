@@ -3,7 +3,7 @@ package com.bandyer.android_common
 import android.arch.lifecycle.Lifecycle
 import android.arch.lifecycle.LifecycleObserver
 import android.arch.lifecycle.OnLifecycleEvent
-import android.support.v7.app.AppCompatActivity
+import android.support.v4.app.FragmentActivity
 
 /**
  * Abstract class for lifecycle events used also for single instances
@@ -15,12 +15,12 @@ object LifecyleBinder {
     /**
      * Bind the activity to the listener for lifecycle events
      *
-     * @param appCompatActivity activity to bind
+     * @param activity activity to bind
      * @param lifecycleEvents listener for the events
      */
-    fun bind(appCompatActivity: AppCompatActivity, lifecycleEvents: LifecycleEvents) {
+    fun bind(activity: FragmentActivity, lifecycleEvents: LifecycleEvents) {
 
-        appCompatActivity.lifecycle.addObserver(object : LifecycleObserver, LifecycleEvents {
+        activity.lifecycle.addObserver(object : LifecycleObserver, LifecycleEvents {
 
             @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
             override fun create() {
@@ -50,7 +50,7 @@ object LifecyleBinder {
             @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
             override fun destroy() {
                 lifecycleEvents.destroy()
-                appCompatActivity.lifecycle.removeObserver(this)
+                activity.lifecycle.removeObserver(this)
             }
         })
     }
