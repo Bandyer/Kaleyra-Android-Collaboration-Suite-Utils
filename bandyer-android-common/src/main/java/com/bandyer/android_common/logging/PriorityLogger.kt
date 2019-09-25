@@ -1,8 +1,8 @@
 package com.bandyer.android_common.logging
 
 import android.os.Build
-import android.support.annotation.NonNull
-import android.support.annotation.Nullable
+import androidx.annotation.NonNull
+import androidx.annotation.Nullable
 import com.bandyer.android_common.BuildConfig
 import com.bandyer.android_common.logging.BaseLogger.Priority.DEBUG
 import com.bandyer.android_common.logging.BaseLogger.Priority.ERROR
@@ -11,7 +11,6 @@ import com.bandyer.android_common.logging.BaseLogger.Priority.LogPriority
 import com.bandyer.android_common.logging.BaseLogger.Priority.VERBOSE
 import com.bandyer.android_common.logging.BaseLogger.Priority.WARN
 import java.util.regex.Pattern
-
 
 /**
  * Priority based logger abstraction

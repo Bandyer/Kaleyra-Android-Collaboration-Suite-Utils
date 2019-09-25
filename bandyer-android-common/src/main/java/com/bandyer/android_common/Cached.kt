@@ -80,9 +80,9 @@ private class SynchronizedCachedImpl<T>(initializer: () -> T, lock: Any? = null)
                 if (_v2 !== null)
                     _v2 as T
                 else {
+                    initializer ?: return null
                     val typedValue = initializer!!()
                     _value = typedValue
-//                    initializer = null
                     typedValue
                 }
             }

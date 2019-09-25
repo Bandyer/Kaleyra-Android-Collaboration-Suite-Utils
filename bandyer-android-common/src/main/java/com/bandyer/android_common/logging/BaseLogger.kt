@@ -2,7 +2,7 @@
 
 package com.bandyer.android_common.logging
 
-import android.support.annotation.IntDef
+import androidx.annotation.IntDef
 
 /**
  * Base logger abstraction
