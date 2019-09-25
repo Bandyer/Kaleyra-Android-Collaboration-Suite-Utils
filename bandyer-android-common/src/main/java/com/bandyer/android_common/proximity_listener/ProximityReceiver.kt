@@ -8,9 +8,8 @@ import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.os.Build
 import android.os.CountDownTimer
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import com.bandyer.android_common.*
-import java.lang.ref.WeakReference
 
 
 /**
@@ -22,22 +21,16 @@ import java.lang.ref.WeakReference
  *
  * @param proximitySensorListener proximity sensor listener to notify when a change occurred.
  */
-internal class ProximityReceiver constructor(var context: AppCompatActivity?, private var proximitySensorListener: ProximitySensorListener, override var debounceMillis: Long = 500) : ProximitySensor, SensorEventListener, LifecycleEvents {
+internal class ProximityReceiver constructor(var context: Context?, private var proximitySensorListener: ProximitySensorListener, override var debounceMillis: Long = 500) : ProximitySensor, SensorEventListener, LifecycleEvents {
 
     private val DEFAULT_BATCH_LATENCY = 190000
 
     private var lastEvent: SensorEvent? = null
     private var isTimerRunning = false
 
-    internal var sensorManager by cached {
-        val hasProximitySensor = context?.packageManager?.hasSystemFeature(PackageManager.FEATURE_SENSOR_PROXIMITY)
-        if (hasProximitySensor == false) return@cached null
-        return@cached context!!.getSystemService(Context.SENSOR_SERVICE) as? SensorManager
-    }
+    internal var sensorManager: SensorManager? = null
 
-    private var proximitySensor by cached {
-        sensorManager?.getDefaultSensor(Sensor.TYPE_PROXIMITY)
-    }
+    private var proximitySensor: Sensor? = null
 
     private var lastStateIsNear = false
 
@@ -45,8 +38,11 @@ internal class ProximityReceiver constructor(var context: AppCompatActivity?, pr
      * Activate the proximity sensor
      */
     init {
-        LifecyleBinder.bind(context!!, this)
-
+        val hasProximitySensor = context?.packageManager?.hasSystemFeature(PackageManager.FEATURE_SENSOR_PROXIMITY) ?: false
+        if (hasProximitySensor) sensorManager = context!!.getSystemService(Context.SENSOR_SERVICE) as? SensorManager
+        proximitySensor = sensorManager?.getDefaultSensor(Sensor.TYPE_PROXIMITY)
+        if (context is AppCompatActivity) LifecyleBinder.bind(context as AppCompatActivity, this)
+        else resume()
     }
 
     override fun create() {}
@@ -65,6 +61,7 @@ internal class ProximityReceiver constructor(var context: AppCompatActivity?, pr
 
     override fun destroy() {
         checkMainThread()
+        sensorManager?.unregisterListener(this)
         context = null
         sensorManager = null
         proximitySensor = null

@@ -1,6 +1,6 @@
 package com.bandyer.android_common.proximity_listener
 
-import android.support.v7.app.AppCompatActivity
+import android.content.Context
 
 /**
  * ProximitySensor is implemented as a boolean-sensor and works based on the lifecycle of the binded activity.
@@ -29,27 +29,15 @@ interface ProximitySensor {
         /**
          * Method to bind the ProximitySensor to the current Activity lifecycle
          *
-         * @param context Activity
+         * @param applicationContext ApplicationContext
          * @param listener Listener where state changes are forwarded
          * @param debounceMillis Maximum debounce factor in millis for event reporting
          * @return ProximitySensor interface
          */
-        @kotlin.jvm.JvmOverloads
-        fun bind(context: AppCompatActivity, listener: ProximitySensorListener, debounceMillis: Long = 500): ProximitySensor {
-            return ProximityReceiver(context, listener, debounceMillis)
+        fun bind(applicationContext: Context, listener: ProximitySensorListener, debounceMillis: Long = 500): ProximitySensor {
+            return ProximityReceiver(applicationContext, listener, debounceMillis)
         }
 
-        /**
-         * Method to bind the ProximitySensor to the current Activity lifecycle
-         *
-         * @param context Activity
-         * @param debounceMillis Maximum debounce factor in millis for event reporting
-         * @return ProximitySensor interface
-         */
-        @kotlin.jvm.JvmOverloads
-        fun <T> bind(context: T, debounceMillis: Long = 500): ProximitySensor where T : AppCompatActivity, T : ProximitySensorListener {
-            return bind(context, context, debounceMillis)
-        }
     }
 
     /**
