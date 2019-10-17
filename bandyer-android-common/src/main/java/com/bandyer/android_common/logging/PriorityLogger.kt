@@ -144,7 +144,7 @@ abstract class PriorityLogger(@LogPriority val priority: Int = VERBOSE) : BaseLo
         // because Robolectric runs them on the JVM but on Android the elements are different.
         val stackTrace = Throwable().stackTrace
         if (stackTrace.size <= CALL_STACK_INDEX)
-            return BuildConfig.APPLICATION_ID
+            return BuildConfig.LIBRARY_PACKAGE_NAME
         return createStackElementTag(stackTrace[CALL_STACK_INDEX])
     }
 }
