@@ -1,12 +1,14 @@
 package com.bandyer.android_common
 
-import android.graphics.*
-import android.graphics.drawable.ColorDrawable
+import android.graphics.Canvas
+import android.graphics.Outline
+import android.graphics.Path
+import android.graphics.RectF
 import android.os.Build
-import android.support.annotation.RequiresApi
 import android.util.Log
 import android.view.View
 import android.view.ViewOutlineProvider
+import androidx.annotation.RequiresApi
 import kotlin.math.min
 
 /**
@@ -86,7 +88,7 @@ interface RoundedView : Roundable {
      * @param canvas Canvas to modify
      */
     fun <T> T.setRoundClip(canvas: Canvas?) where T : View, T : Roundable {
-        if (radius < 0)
+        if (mRadius < 0)
             return
         clipPath?.let { canvas?.clipPath(it) }
     }
@@ -97,7 +99,7 @@ interface RoundedView : Roundable {
      * @param rounded enable or disable circular clipping
      */
     fun <T> T.round(rounded: Boolean) where T : View, T : Roundable {
-        this@round.isRounded = rounded
+        this.mIsRounded = rounded
         post {
             setCornerRadius(if (!rounded) 0f else min(width, height) / 2f)
         }
@@ -109,7 +111,7 @@ interface RoundedView : Roundable {
      * @param radius radius value in pixels
      */
     fun <T> T.setCornerRadius(radius: Float) where T : View, T : Roundable {
-        this.radius = radius
+        this.mRadius = radius
         addOnLayoutChangeListener { _, _, _, _, _, _, _, _, _ ->
             calculateClippingRectAndApplyClipPath()
         }
@@ -134,23 +136,38 @@ interface RoundedView : Roundable {
         (this as T).setCornerRadius(radius)
     }
 
+    /**
+     * Return the current radius
+     * @receiver View class implementing this interface
+     * @return Float current radius
+     * @since v1.0.6
+     */
+    fun <T> T.radius() where T : View, T : Roundable = this.mRadius
+
+    /**
+     * Return if is rounded
+     * @receiver View class implementing this interface
+     * @return true if rounded, false otherwise
+     * @since v1.0.6
+     */
+    fun <T> T.rounded() where T : View, T : Roundable = this.mIsRounded
 }
 
 /**
  * Property specifying the rounding factor
  */
-private var <T> T.radius: Float where T : View, T : Roundable  by FieldProperty { -1f }
+private var <T> T.mRadius: Float where T : View, T : Roundable  by FieldProperty { -1f }
 
 /**
  * Make the view rounded like a circle
  */
-private var <T> T.isRounded: Boolean where T : View, T : Roundable  by FieldProperty { false }
+private var <T> T.mIsRounded: Boolean where T : View, T : Roundable  by FieldProperty { false }
 
 /**
  * Radius based on measured width/height
  */
 private val <T> T.measuredRadius: Float where T : android.view.View, T : Roundable
-    get() = if (isRounded) min(width, height) / 2f else radius
+    get() = if (mIsRounded) min(width, height) / 2f else mRadius
 
 /**
  * Enable clipping for VideoStreamView
