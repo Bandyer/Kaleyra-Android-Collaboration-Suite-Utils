@@ -3,6 +3,5 @@ $dokka.linkExtension:html
 $dokka.location:com.bandyer.android_common.extensions$hasPermission(android.content.Context, kotlin.String)com.bandyer.android_common.extensions/android.content.-context/has-permission.html
 com.bandyer.android_common
 com.bandyer.android_common.extensions
-com.bandyer.android_common.fetcher
 com.bandyer.android_common.logging
 com.bandyer.android_common.proximity_listener
