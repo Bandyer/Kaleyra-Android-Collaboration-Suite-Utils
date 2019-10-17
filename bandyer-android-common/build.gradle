@@ -39,7 +39,7 @@ android {
         targetSdkVersion sdkVersion
         versionCode 1
         versionName version
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
@@ -67,22 +67,22 @@ dependencies {
 
     /*** Platform ***/
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation("com.android.support:appcompat-v7:$supportLibVersion") {
+    implementation('androidx.appcompat:appcompat:1.0.0') {
         exclude group: 'com.android.support', module: 'animated-vector-drawable'
         exclude group: 'com.android.support', module: 'support-vector-drawable'
     }
 
     /*** Lifecycle ***/
-    implementation "android.arch.lifecycle:runtime:$lifecycle_version"
-    kapt "android.arch.lifecycle:compiler:$lifecycle_version"
+    implementation 'androidx.lifecycle:lifecycle-runtime:2.0.0'
+    kapt 'androidx.lifecycle:lifecycle-compiler:2.0.0'
 
     /*** Testing ***/
     testImplementation 'junit:junit:4.12'
     testImplementation 'io.mockk:mockk:1.8.7'
 
-    androidTestImplementation "com.android.support.test:runner:${supportTestVersion}"
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'org.mockito:mockito-android:2.+'
-    androidTestImplementation("com.android.support.test.espresso:espresso-core:${espressoVersion}", {
+    androidTestImplementation('androidx.test.espresso:espresso-core:3.1.0', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
 

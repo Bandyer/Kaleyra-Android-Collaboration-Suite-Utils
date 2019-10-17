@@ -1,6 +1,6 @@
 package com.bandyer.android_common.proximity_listener
 
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 
 /**
  * ProximitySensor is implemented as a boolean-sensor and works based on the lifecycle of the binded activity.

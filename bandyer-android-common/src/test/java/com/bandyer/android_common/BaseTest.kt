@@ -6,7 +6,7 @@
 package com.bandyer.android_common
 
 import android.content.Context
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import io.mockk.MockKAnnotations
 import io.mockk.every
 import io.mockk.mockk
