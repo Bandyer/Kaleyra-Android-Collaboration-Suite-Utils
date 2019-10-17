@@ -2,9 +2,11 @@ package com.bandyer.demo_app;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import androidx.appcompat.widget.AppCompatImageView;
 import android.util.AttributeSet;
 import android.view.View;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatImageView;
 
 import com.bandyer.android_common.Roundable;
 import com.bandyer.android_common.RoundedView;
@@ -31,18 +33,18 @@ public class RoundedImageView extends AppCompatImageView implements RoundedView 
     }
 
     @Override
-    public <T extends View & Roundable> void setRoundClip(T $receiver, Canvas canvas) {
-        RoundedView.DefaultImpls.setRoundClip(this, this, canvas);
+    public <T extends View & Roundable> void setRoundClip(@NonNull T receiver, Canvas canvas) {
+        RoundedView.DefaultImpls.setRoundClip(this, receiver, canvas);
     }
 
     @Override
-    public <T extends View & Roundable> void round(T $receiver, boolean rounded) {
-        RoundedView.DefaultImpls.round(this, this, rounded);
+    public <T extends View & Roundable> void round(@NonNull T receiver, boolean rounded) {
+        RoundedView.DefaultImpls.round(this, receiver, rounded);
     }
 
     @Override
-    public <T extends View & Roundable> void setCornerRadius(T $receiver, float radius) {
-        RoundedView.DefaultImpls.setCornerRadius(this, this, radius);
+    public <T extends View & Roundable> void setCornerRadius(@NonNull T receiver, float radius) {
+        RoundedView.DefaultImpls.setCornerRadius(this, receiver, radius);
     }
 
 
@@ -54,5 +56,15 @@ public class RoundedImageView extends AppCompatImageView implements RoundedView 
     @Override
     public <T extends View & Roundable> void setCornerRadius(float radius) {
         RoundedView.DefaultImpls.setCornerRadius(this, radius);
+    }
+
+    @Override
+    public <T extends View & Roundable> float radius(@NonNull T radius) {
+        return RoundedView.DefaultImpls.radius(this, radius);
+    }
+
+    @Override
+    public <T extends View & Roundable> boolean rounded(@NonNull T rounded) {
+        return RoundedView.DefaultImpls.rounded(this, rounded);
     }
 }
