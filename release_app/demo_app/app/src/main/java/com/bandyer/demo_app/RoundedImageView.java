@@ -67,4 +67,15 @@ public class RoundedImageView extends AppCompatImageView implements RoundedView 
     public <T extends View & Roundable> boolean rounded(@NonNull T rounded) {
         return RoundedView.DefaultImpls.rounded(this, rounded);
     }
+
+    @Override
+    public <T extends View & Roundable> float radius() {
+        return RoundedView.DefaultImpls.radius(this);
+    }
+
+    @Override
+    public <T extends View & Roundable> boolean rounded() {
+        return RoundedView.DefaultImpls.rounded(this);
+    }
+
 }
