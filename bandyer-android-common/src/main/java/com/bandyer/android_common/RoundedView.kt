@@ -151,6 +151,22 @@ interface RoundedView : Roundable {
      * @since v1.0.6
      */
     fun <T> T.rounded() where T : View, T : Roundable = this.mIsRounded
+
+    /**
+     * Return the current radius
+     * @receiver View class implementing this interface
+     * @return Float current radius
+     * @since v1.0.7
+     */
+    fun <T> radius() where T : View, T : Roundable = (this as T).radius()
+
+    /**
+     * Return if is rounded
+     * @receiver View class implementing this interface
+     * @return true if rounded, false otherwise
+     * @since v1.0.7
+     */
+    fun <T> rounded() where T : View, T : Roundable = (this as T).rounded()
 }
 
 /**
