@@ -185,6 +185,14 @@ private var <T> T.mIsRounded: Boolean where T : View, T : Roundable  by FieldPro
 private val <T> T.measuredRadius: Float where T : android.view.View, T : Roundable
     get() = if (mIsRounded) min(width, height) / 2f else mRadius
 
+
+/**
+ * Current clipping path
+ */
+private val <T> T.clipPath: Path? where T : android.view.View, T : Roundable   by FieldProperty {
+    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) Path() else null
+}
+
 /**
  * Enable clipping for VideoStreamView
  * @param radius radius value in pixels
@@ -228,10 +236,6 @@ private fun <T> T.calculateClippingRectAndApplyClipPath() where T : View, T : Ro
         calculateClippingRectAndApplyClipPathApi21(measuredRadius)
     else
         calculateClippingRectAndApplyClipPathCompat(measuredRadius)
-}
-
-private val <T> T.clipPath: Path? where T : android.view.View, T : Roundable   by cached {
-    return@cached if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) Path() else null
 }
 
 /**
