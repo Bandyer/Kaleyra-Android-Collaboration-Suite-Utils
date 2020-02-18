@@ -16,7 +16,7 @@ import java.util.concurrent.Executors
  * @author kristiyan
  */
 open class BaseObserverCollection<T>(private val callbackHandler: WeakHandler? = null,
-                                     private var executor: ExecutorService? = Executors.newSingleThreadExecutor()) : InvocationHandler, ObserverCollection<T> {
+                                     private var executor: ExecutorService = Executors.newSingleThreadExecutor()) : InvocationHandler, ObserverCollection<T> {
 
     @Volatile
     private var observersList = mutableListOf<WeakReference<T>>()
