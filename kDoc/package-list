@@ -4,4 +4,5 @@ $dokka.location:com.bandyer.android_common.extensions$hasPermission(android.cont
 com.bandyer.android_common
 com.bandyer.android_common.extensions
 com.bandyer.android_common.logging
+com.bandyer.android_common.observer
 com.bandyer.android_common.proximity_listener
