@@ -42,9 +42,7 @@ open class BaseObserverCollection<T>(private val callbackHandler: WeakHandler? =
     }
 
     override fun contains(observer: T, result: (Boolean) -> Unit) {
-        executor.submit {
-            notifyUI { notifyUI { result(observersList.any { it.get() == observer }) } }
-        }
+        executor.submit { notifyUI { result(observersList.any { it.get() == observer }) } }
     }
 
     override fun getObservers(result: (List<T>) -> Unit) {
