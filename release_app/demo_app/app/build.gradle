@@ -27,11 +27,11 @@ dependencies {
 
     /*** Platform ***/
     implementation "androidx.appcompat:appcompat:1.1.0"
-    implementation "com.google.android.material:material:1.0.0"
-    implementation "androidx.recyclerview:recyclerview:1.0.0"
+    implementation "com.google.android.material:material:1.1.0"
+    implementation "androidx.recyclerview:recyclerview:1.1.0"
 
     /***  Testing ***/
-    testImplementation 'junit:junit:4.12'
+    testImplementation 'junit:junit:4.13'
 
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'org.mockito:mockito-android:2.+'
