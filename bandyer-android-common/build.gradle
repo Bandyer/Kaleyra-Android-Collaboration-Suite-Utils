@@ -25,7 +25,7 @@ def projectLicenseUrl = "https://github.com/${gitHubUsername}/${gitHubProjectNam
 def projectKeywords = ['chat', 'communication', 'android', 'video', 'conference', 'helpdesk', 'bandyer', 'webrtc', 'call', 'audio']
 def developerFullName = "Bandyer Srl"
 group = projectGroup
-version = "1.0.9"
+version = "1.0.10"
 
 def weakHandler_version = "1.1"
 def supportTestVersion = "1.0.2"
@@ -128,8 +128,8 @@ bintray {
     user = properties.getProperty("bintray.user")
     key = properties.getProperty("bintray.apikey")
     configurations = ['archives']
-    override = true
-//    dryRun = true
+//    override = true
+    dryRun = true
     pkg {
         repo = "Communication"
         name = projectName
