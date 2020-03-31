@@ -4,6 +4,7 @@ import com.badoo.mobile.util.WeakHandler
 import java.lang.ref.WeakReference
 import java.lang.reflect.InvocationHandler
 import java.lang.reflect.Method
+import java.util.concurrent.ConcurrentLinkedQueue
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
@@ -19,7 +20,7 @@ open class BaseObserverCollection<T>(private val callbackHandler: WeakHandler? =
                                      private var executor: ExecutorService = Executors.newSingleThreadExecutor()) : InvocationHandler, ObserverCollection<T> {
 
     @Volatile
-    private var observersList = mutableListOf<WeakReference<T>>()
+    private var observersList = ConcurrentLinkedQueue<WeakReference<T>>()
 
     override fun forEach(item: (T) -> Unit) {
         executor.submit {
@@ -72,9 +73,8 @@ open class BaseObserverCollection<T>(private val callbackHandler: WeakHandler? =
 
     override fun remove(observer: T) {
         executor.submit {
-            val idx = observersList.indexOfFirst { it.get() == observer }
-            if (idx == -1) return@submit
-            observersList.removeAt(idx)
+            val removeObj = observersList.firstOrNull { it.get() == observer } ?: return@submit
+            observersList.remove(removeObj)
         }
     }
 
