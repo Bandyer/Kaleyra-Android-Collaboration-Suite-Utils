@@ -158,7 +158,7 @@ interface RoundedView : Roundable {
      * @return Float current radius
      * @since v1.0.7
      */
-    fun <T> radius() where T : View, T : Roundable = (this as T).radius()
+    fun <T> radius(): Float where T : View, T : Roundable = (this as T).radius()
 
     /**
      * Return if is rounded
@@ -166,7 +166,7 @@ interface RoundedView : Roundable {
      * @return true if rounded, false otherwise
      * @since v1.0.7
      */
-    fun <T> rounded() where T : View, T : Roundable = (this as T).rounded()
+    fun <T> rounded(): Boolean where T : View, T : Roundable = (this as T).rounded()
 }
 
 /**
