@@ -27,9 +27,19 @@ class ObservableTest : BaseTest() {
 
     internal interface TestObserverCollection : ObserverCollection<TestObserver>, TestObserver
 
+    @Test(expected = RuntimeException::class)
+    fun testHandlerPost() {
+        handler.post { throw RuntimeException("executed") }
+    }
+
+    @Test(expected = RuntimeException::class)
+    fun testExecutorSubmit() {
+        executor.submit { throw RuntimeException("executed") }.get()
+    }
+
     @Test
     fun testRemoveAt() {
-        val observers = spyk(BaseObserverCollection<TestObserver>())
+        val observers = spyk(BaseObserverCollection<TestObserver>(handler, executor))
 
         val obs = mockk<TestObserver>()
         val obs2 = mockk<TestObserver>()
@@ -43,14 +53,14 @@ class ObservableTest : BaseTest() {
             observers.remove(obs2)
         }
 
-        observers.size { assertTrue(it == 1) }
+        observers.size { assertEquals(1, it) }
 
         observers.contains(obs) { assertTrue(it) }
     }
 
     @Test
     fun testRemoveAll() {
-        val observers = spyk(BaseObserverCollection<Any>())
+        val observers = spyk(BaseObserverCollection<Any>(handler, executor))
 
         observers.add(mockk(relaxed = true))
         observers.add(mockk(relaxed = true))
@@ -65,7 +75,7 @@ class ObservableTest : BaseTest() {
 
     @Test
     fun testNotifyAndRemoveAt() {
-        val observers = spyk(ObserverFactory.createObserverCollection<TestObserverCollection>(null))
+        val observers = spyk(ObserverFactory.createObserverCollection<TestObserverCollection>(handler, executor))
 
         val obs = mockk<TestObserver>(relaxed = true)
         val obs2 = mockk<TestObserver>(relaxed = true)
@@ -105,7 +115,7 @@ class ObservableTest : BaseTest() {
     @Test
     fun testConcurrentModificationException() {
 
-        val observers = ObserverFactory.createObserverCollection<TestObserverCollection>(null)
+        val observers = ObserverFactory.createObserverCollection<TestObserverCollection>(handler, executor)
         val obs = mockk<TestObserver>(relaxed = true)
         val obs1 = mockk<TestObserver>(relaxed = true)
         val obs2 = mockk<TestObserver>(relaxed = true)
@@ -133,7 +143,7 @@ class ObservableTest : BaseTest() {
 
     @Test
     fun testProxy() {
-        val observers = ObserverFactory.createObserverCollection<TestObserverCollection>(null)
+        val observers = ObserverFactory.createObserverCollection<TestObserverCollection>(handler, executor)
         val obs = mockk<TestObserver>(relaxed = true)
         val obs1 = mockk<TestObserver>(relaxed = true)
         val obs2 = mockk<TestObserver>(relaxed = true)
@@ -161,7 +171,7 @@ class ObservableTest : BaseTest() {
 
     @Test
     fun testNotifyAllAndThenRemoveAll() {
-        val observers = ObserverFactory.createObserverCollection<TestObserverCollection>(null)
+        val observers = ObserverFactory.createObserverCollection<TestObserverCollection>(handler, executor)
 
         val obs = mockk<TestObserver>(relaxed = true)
         val obs1 = mockk<TestObserver>(relaxed = true)
@@ -188,8 +198,6 @@ class ObservableTest : BaseTest() {
 
         observers.clear()
 
-        observers.isEmpty {
-            assertTrue(it)
-        }
+        observers.isEmpty { assertTrue(it) }
     }
 }
