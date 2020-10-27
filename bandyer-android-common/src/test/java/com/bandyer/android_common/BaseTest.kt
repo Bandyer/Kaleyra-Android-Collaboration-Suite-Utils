@@ -27,7 +27,7 @@ open class BaseTest {
 
         every { handler.post(any()) } answers {
             executor.execute(firstArg())
-            mockk()
+            true
         }
     }
 

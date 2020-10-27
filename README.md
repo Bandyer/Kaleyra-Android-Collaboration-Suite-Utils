@@ -24,7 +24,7 @@ Bandyer is a young innovative startup that enables audio/video communication and
 Download the [latest JAR](https://bintray.com/bandyer/Communication/Android-Common) or grab via Gradle:
 
 ```groovy
-implementation ("com.bandyer:bandyer-android-common:1.0.4") {
+implementation ("com.bandyer:bandyer-android-common:1.0.10") {
         exclude group: "android.arch.core"
         exclude group: "android.arch.lifecycle"
 }
@@ -34,9 +34,7 @@ implementation ("com.bandyer:bandyer-android-common:1.0.4") {
 
 You can find the complete documentation in two different styles
 
-Kotlin Doc: [https://bandyer.github.io/Bandyer-Android-Common/kDoc/](https://bandyer.github.io/Bandyer-Android-Common/kDoc/)
-
-Java Doc: [https://bandyer.github.io/Bandyer-Android-Common/jDoc/](https://bandyer.github.io/Bandyer-Android-Common/jDoc/)
+Kotlin Doc: [https://bandyer.github.io/Bandyer-Android-Common/kDoc/](https://bandyer.github.io/Bandyer-Android-Common/kDoc/bandyer-android-common/)
 
 ## Support
 To get basic support please submit an [Issue](https://github.com/Bandyer/Bandyer-Android-Common/issues) 
