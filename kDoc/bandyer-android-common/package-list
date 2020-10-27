@@ -1,0 +1,29 @@
+$dokka.format:html-v1
+$dokka.linkExtension:html
+$dokka.location:com.bandyer.android_common.extensions//hasPermission/android.content.Context#kotlin.String/PointingToDeclaration/com.bandyer.android_common.extensions/-context-extensions-kt/has-permission.html
+$dokka.location:com.bandyer.android_common.logging/BaseLogger.Priority/<get-DEBUG>/#/PointingToDeclaration/com.bandyer.android_common.logging/-base-logger/-priority/get-d-e-b-u-g.html
+$dokka.location:com.bandyer.android_common.logging/BaseLogger.Priority/<get-ERROR>/#/PointingToDeclaration/com.bandyer.android_common.logging/-base-logger/-priority/get-e-r-r-o-r.html
+$dokka.location:com.bandyer.android_common.logging/BaseLogger.Priority/<get-INFO>/#/PointingToDeclaration/com.bandyer.android_common.logging/-base-logger/-priority/get-i-n-f-o.html
+$dokka.location:com.bandyer.android_common.logging/BaseLogger.Priority/<get-VERBOSE>/#/PointingToDeclaration/com.bandyer.android_common.logging/-base-logger/-priority/get-v-e-r-b-o-s-e.html
+$dokka.location:com.bandyer.android_common.logging/BaseLogger.Priority/<get-WARN>/#/PointingToDeclaration/com.bandyer.android_common.logging/-base-logger/-priority/get-w-a-r-n.html
+$dokka.location:com.bandyer.android_common.logging/BaseLogger/<get-target>/#/PointingToDeclaration/com.bandyer.android_common.logging/-base-logger/get-target.html
+$dokka.location:com.bandyer.android_common.logging/PriorityLogger/<get-priority>/#/PointingToDeclaration/com.bandyer.android_common.logging/-priority-logger/get-priority.html
+$dokka.location:com.bandyer.android_common.logging/PriorityLogger/<get-target>/#/PointingToDeclaration/com.bandyer.android_common.logging/-priority-logger/get-target.html
+$dokka.location:com.bandyer.android_common.proximity_listener/ProximitySensor/<get-debounceMillis>/#/PointingToDeclaration/com.bandyer.android_common.proximity_listener/-proximity-sensor/get-debounce-millis.html
+$dokka.location:com.bandyer.android_common//assertIsTrue/#kotlin.Boolean/PointingToDeclaration/com.bandyer.android_common/-bandyer-utils-kt/assert-is-true.html
+$dokka.location:com.bandyer.android_common//cached/#kotlin.Function0[TypeParam(bounds=[kotlin.Any?])]/PointingToDeclaration/com.bandyer.android_common/-cached-kt/cached.html
+$dokka.location:com.bandyer.android_common//checkMainThread/#/PointingToDeclaration/com.bandyer.android_common/-bandyer-utils-kt/check-main-thread.html
+$dokka.location:com.bandyer.android_common//getValue/com.bandyer.android_common.Cached[TypeParam(bounds=[kotlin.Any?])]#kotlin.Any?#kotlin.reflect.KProperty[*]/PointingToDeclaration/com.bandyer.android_common/-cached-kt/get-value.html
+$dokka.location:com.bandyer.android_common//setValue/com.bandyer.android_common.Cached[TypeParam(bounds=[kotlin.Any?])]#kotlin.Any?#kotlin.reflect.KProperty[*]#TypeParam(bounds=[kotlin.Any?])?/PointingToDeclaration/com.bandyer.android_common/-cached-kt/set-value.html
+$dokka.location:com.bandyer.android_common/Cached/<get-value>/#/PointingToDeclaration/com.bandyer.android_common/-cached/get-value.html
+$dokka.location:com.bandyer.android_common/Cached/<set-value>/#TypeParam(bounds=[kotlin.Any?])?/PointingToDeclaration/com.bandyer.android_common/-cached/set-value.html
+$dokka.location:com.bandyer.android_common/WeakIdentityHashMap/<get-entries>/#/PointingToDeclaration/com.bandyer.android_common/-weak-identity-hash-map/get-entries.html
+$dokka.location:com.bandyer.android_common/WeakIdentityHashMap/<get-keys>/#/PointingToDeclaration/com.bandyer.android_common/-weak-identity-hash-map/get-keys.html
+$dokka.location:com.bandyer.android_common/WeakIdentityHashMap/<get-size>/#/PointingToDeclaration/com.bandyer.android_common/-weak-identity-hash-map/get-size.html
+$dokka.location:com.bandyer.android_common/WeakIdentityHashMap/<get-values>/#/PointingToDeclaration/com.bandyer.android_common/-weak-identity-hash-map/get-values.html
+com.bandyer.android_common
+com.bandyer.android_common.extensions
+com.bandyer.android_common.logging
+com.bandyer.android_common.observer
+com.bandyer.android_common.proximity_listener
+
