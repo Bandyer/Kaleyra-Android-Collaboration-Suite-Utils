@@ -3,7 +3,7 @@ apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
 apply plugin: "kotlin-android"
 apply plugin: "kotlin-android-extensions"
-apply plugin: 'org.jetbrains.dokka-android'
+apply plugin: 'org.jetbrains.dokka'
 apply plugin: "kotlin-kapt"
 
 
@@ -85,6 +85,9 @@ dependencies {
 
     /*** Other Dependencies ***/
     api "com.badoo.mobile:android-weak-handler:$weakHandler_version"
+
+    /*** Documentation ***/
+    dokkaHtmlPlugin("org.jetbrains.dokka:kotlin-as-java-plugin:$dokka_version")
 }
 
 
@@ -151,8 +154,7 @@ task sourcesJar(type: Jar) {
 }
 
 task dokkaDoc() {
-    dependsOn createApiDoc("genJavaDoc", "html", "$buildDir/kDoc")
-    dependsOn createApiDoc("genKDoc", "javadoc", "$buildDir/jDoc")
+    dependsOn dokkaHtml
 }
 
 task publishDocs(type: Exec) {
@@ -160,27 +162,25 @@ task publishDocs(type: Exec) {
     commandLine 'python', './publish_doc.py', "$projectGroup", "${project.name}", "$version"
 }
 
-def createApiDoc(def name, def format, def dir) {
-    return tasks.create(name, org.jetbrains.dokka.gradle.DokkaAndroidTask) {
-        outputFormat = format
-        outputDirectory = dir
-        skipEmptyPackages = true // Do not create index pages for empty packages
+dokkaHtml {
+    outputDirectory = new File("$buildDir/kDoc")
+    dokkaSourceSets {
+        configureEach {
+            reportUndocumented.set(true)
+            jdkVersion.set(8)
+            includeNonPublic.set(false)
+            skipEmptyPackages.set(true)
+        }
     }
 }
 
-task jdocJar(type: Jar, dependsOn: dokkaDoc) {
-    classifier = 'javadoc'
-    from "$buildDir/jDoc"
-}
-
-task kdocJar(type: Jar, dependsOn: dokkaDoc) {
+task kdocJar(type: Jar, dependsOn: dokkaHtml) {
     classifier = 'kdoc'
     from "$buildDir/kDoc"
 }
 
 artifacts {
     archives kdocJar
-    archives jdocJar
     archives sourcesJar
 }
 
