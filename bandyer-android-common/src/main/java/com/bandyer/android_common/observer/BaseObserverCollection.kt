@@ -20,15 +20,12 @@ open class BaseObserverCollection<T>(private val callbackHandler: WeakHandler? =
                                      private var executor: ExecutorService = Executors.newSingleThreadExecutor()) : InvocationHandler, ObserverCollection<T> {
 
     @Volatile
-    private var observersList = ConcurrentLinkedQueue<WeakReference<T>>()
+    private var observersList = ConcurrentLinkedQueue<T>()
 
     override fun forEach(item: (T) -> Unit) {
         executor.submit {
-            observersList.forEach { item ->
-                notifyUI {
-                    val obs = item.get() ?: return@notifyUI
-                    item(obs)
-                }
+            observersList.forEach {
+                notifyUI { item(it) }
             }
         }
     }
@@ -42,16 +39,13 @@ open class BaseObserverCollection<T>(private val callbackHandler: WeakHandler? =
     }
 
     override fun contains(observer: T, result: (Boolean) -> Unit) {
-        executor.submit { notifyUI { result(observersList.any { it.get() == observer }) } }
+        executor.submit { notifyUI { result(observersList.any { it == observer }) } }
     }
 
     override fun getObservers(result: (List<T>) -> Unit) {
         executor.submit {
             val list = mutableListOf<T>()
-            observersList.map { it.get() }.forEach {
-                val item = it ?: return@forEach
-                list.add(item)
-            }
+            observersList.forEach { list.add(it) }
             notifyUI { result(list) }
         }
     }
@@ -59,19 +53,19 @@ open class BaseObserverCollection<T>(private val callbackHandler: WeakHandler? =
     override fun set(obs: MutableList<T>) {
         executor.submit {
             observersList.clear()
-            observersList.addAll(obs.map { WeakReference(it) })
+            observersList.addAll(obs)
         }
     }
 
     override fun add(observer: T) {
         executor.submit {
-            observersList.add(WeakReference(observer))
+            observersList.add(observer)
         }
     }
 
     override fun remove(observer: T) {
         executor.submit {
-            val removeObj = observersList.firstOrNull { it.get() == observer } ?: return@submit
+            val removeObj = observersList.firstOrNull { it == observer } ?: return@submit
             observersList.remove(removeObj)
         }
     }
