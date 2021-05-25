@@ -1,6 +1,20 @@
+buildscript {
+
+    ext.dokka_version = "1.4.10.2"
+
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+
+    dependencies {
+        classpath "org.jetbrains.dokka:dokka-gradle-plugin:${dokka_version}"
+    }
+}
+
+
 apply plugin: 'com.android.library'
 apply plugin: 'com.github.dcendents.android-maven'
-apply plugin: 'com.jfrog.bintray'
 apply plugin: "kotlin-android"
 apply plugin: "kotlin-android-extensions"
 apply plugin: 'org.jetbrains.dokka'
@@ -124,27 +138,6 @@ install {
 
             }
         }
-    }
-}
-
-bintray {
-    user = properties.getProperty("bintray.user")
-    key = properties.getProperty("bintray.apikey")
-    configurations = ['archives']
-//    override = true
-    dryRun = true
-    pkg {
-        repo = "Communication"
-        name = projectName
-        userOrg = projectOrg
-        desc = projectDesc
-        websiteUrl = siteUrl
-        vcsUrl = gitUrl
-        issueTrackerUrl = bugTrackerUrl
-        licenses = projectLicenses
-        labels = projectKeywords
-        publicDownloadNumbers = true
-        publish = true
     }
 }
 
