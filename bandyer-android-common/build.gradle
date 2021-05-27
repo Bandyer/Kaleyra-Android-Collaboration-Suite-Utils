@@ -159,6 +159,7 @@ afterEvaluate {
                 artifactId = project.getName()
                 version = version
                 artifact kdocJar
+                artifact sourcesJar
             }
         }
     }
@@ -181,8 +182,8 @@ task publishUpload {
 }
 
 task sourcesJar(type: Jar) {
+    archiveClassifier.set("sources")
     from android.sourceSets.main.java.srcDirs
-    classifier = 'sources'
 }
 
 task dokkaDoc() {
