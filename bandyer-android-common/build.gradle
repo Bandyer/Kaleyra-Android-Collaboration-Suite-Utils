@@ -1,10 +1,9 @@
 buildscript {
 
-    ext.dokka_version = "1.4.10.2"
+    ext.dokka_version = "1.4.32"
 
     repositories {
         mavenCentral()
-        jcenter()
     }
 
     dependencies {
@@ -12,8 +11,8 @@ buildscript {
     }
 }
 
-
 apply plugin: 'com.android.library'
+apply plugin: 'maven-publish'
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: "kotlin-android"
 apply plugin: "kotlin-android-extensions"
@@ -141,9 +140,50 @@ install {
     }
 }
 
+afterEvaluate {
+    publishing {
+        repositories {
+            maven {
+                url = "s3://maven-bandyer/releases/"
+                credentials(AwsCredentials) {
+                    accessKey = properties.getProperty("maven.accessKey")
+                    secretKey = properties.getProperty("maven.secretKey")
+                }
+            }
+        }
+
+        publications {
+            release(MavenPublication) {
+                from components.release
+                groupId = projectGroup
+                artifactId = project.getName()
+                version = version
+                artifact kdocJar
+                artifact sourcesJar
+            }
+        }
+    }
+}
+
+task invalidateCache(type: Exec) {
+    workingDir '../scripts'
+    def publishPath = "releases"
+    def packageName = projectGroup + "." + project.getName()
+    commandLine 'python', './invalidate_s3_cache.py', properties.getProperty("maven.accessKey"), properties.getProperty("maven.secretKey"), properties.getProperty("maven.distributionId"), publishPath, packageName ,version
+}
+
+task publishUpload {
+    def dryRun = true
+    def publishTask = 'publishToMavenLocal'
+    if(!dryRun) publishTask = 'publish'
+    dependsOn publishTask
+    dependsOn 'invalidateCache'
+    tasks.findByName('invalidateCache').mustRunAfter publishTask
+}
+
 task sourcesJar(type: Jar) {
+    archiveClassifier.set("sources")
     from android.sourceSets.main.java.srcDirs
-    classifier = 'sources'
 }
 
 task dokkaDoc() {
