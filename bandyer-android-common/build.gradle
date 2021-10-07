@@ -13,7 +13,6 @@ buildscript {
 
 apply plugin: 'com.android.library'
 apply plugin: 'maven-publish'
-apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: "kotlin-android"
 apply plugin: "kotlin-android-extensions"
 apply plugin: 'org.jetbrains.dokka'
@@ -53,6 +52,7 @@ android {
         versionCode 1
         versionName version
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
     }
 
     buildTypes {
@@ -60,6 +60,19 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+
+    compileOptions {
+        // Flag to enable support for the new language APIs
+        coreLibraryDesugaringEnabled true
+
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    // For Kotlin projects
+    kotlinOptions {
+        jvmTarget = "1.8"
     }
 
     lintOptions {
@@ -96,6 +109,9 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
 
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.5'
+
+
     /*** Other Dependencies ***/
     api "com.badoo.mobile:android-weak-handler:$weakHandler_version"
 
@@ -107,37 +123,6 @@ dependencies {
 Properties properties = new Properties()
 if (project.rootProject.file("local.properties").exists()) {
     properties.load(project.rootProject.file('local.properties').newDataInputStream())
-}
-
-install {
-    repositories.mavenInstaller {
-        pom.project {
-            name projectName
-            description projectDesc
-            packaging 'aar'
-            groupId projectGroup
-            version version
-            url siteUrl
-            licenses {
-                license {
-                    name projectLicenses[0]
-                    url projectLicenseUrl
-                }
-            }
-            developers {
-                developer {
-                    id properties.getProperty("bintray.user")
-                    name developerFullName
-                }
-            }
-            scm {
-                connection gitUrl
-                developerConnection gitUrl
-                url siteUrl
-
-            }
-        }
-    }
 }
 
 afterEvaluate {
