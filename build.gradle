@@ -8,7 +8,7 @@ buildscript {
     ext.sdkVersion = 28
     ext.buildToolsVersion = "28.0.1"
     ext.supportLibVersion = "28.0.0"
-    ext.kotlin_version = "1.4.10"
+    ext.kotlin_version = "1.5.31"
     ext.lifecycle_version = "1.1.1"
 
     repositories {
@@ -21,7 +21,7 @@ buildscript {
         maven { url 'https://maven.bandyer.com/releases' }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.0.2'
+        classpath 'com.android.tools.build:gradle:7.0.3'
         classpath 'com.github.ben-manes:gradle-versions-plugin:0.21.0'
 
         //classpath dependencies to import library project
