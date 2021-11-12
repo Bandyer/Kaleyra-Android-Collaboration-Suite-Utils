@@ -41,8 +41,13 @@ def developerFullName = "Bandyer Srl"
 group = projectGroup
 version = "1.0.10"
 
+def appCompat_version = "1.3.1"
 def weakHandler_version = "1.1"
 def kotlin_coroutines = "1.5.2"
+def jUnit_version = "4.13.2"
+def mockk_version = "1.12.0"
+def espressoCore_version = "3.1.0"
+def desugaring_version = "1.1.5"
 
 def compiler = javaToolchains.compilerFor {
     languageVersion = JavaLanguageVersion.of(11)
@@ -97,7 +102,7 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
     /*** Platform ***/
-    implementation('androidx.appcompat:appcompat:1.3.1')
+    implementation "androidx.appcompat:appcompat:$appCompat_version"
 
     /*** Lifecycle ***/
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlin_coroutines"
@@ -108,13 +113,13 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     testImplementation 'io.mockk:mockk:1.12.0'
 
-    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
-    androidTestImplementation 'org.mockito:mockito-android:3.12.4'
-    androidTestImplementation('androidx.test.espresso:espresso-core:3.1.0', {
+    androidTestImplementation "androidx.test.ext:junit:$jUnit_version"
+    androidTestImplementation "org.mockito:mockito-android:$mockk_version"
+    androidTestImplementation("androidx.test.espresso:espresso-core:$espressoCore_version", {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
 
-    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.5'
+    coreLibraryDesugaring "com.android.tools:desugar_jdk_libs:$desugaring_version"
 
 
     /*** Other Dependencies ***/
