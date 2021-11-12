@@ -21,8 +21,11 @@ plugins {
 
 apply from: '../publish.gradle'
 
+group = moduleGroupId
+version = moduleVersion
+
 def gitHubUsername = "Bandyer"
-def gitHubProjectName = "Android-Common"
+def gitHubProjectName = "Bandyer-Android-Common"
 
 // init - do not modify this if your project is on github
 def siteUrl = "https://github.com/${gitHubUsername}/${gitHubProjectName}"
@@ -38,8 +41,6 @@ def projectLicenses = ["Apache-2.0"]
 def projectLicenseUrl = "https://github.com/${gitHubUsername}/${gitHubProjectName}/LICENSE.txt"
 def projectKeywords = ['chat', 'communication', 'android', 'video', 'conference', 'helpdesk', 'bandyer', 'webrtc', 'call', 'audio']
 def developerFullName = "Bandyer Srl"
-group = projectGroup
-version = "1.0.10"
 
 def appCompat_version = "1.3.1"
 def weakHandler_version = "1.1"
