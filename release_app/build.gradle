@@ -3,25 +3,23 @@ apply plugin: 'com.github.ben-manes.versions'
 
 buildscript {
 
-    ext.sdkVersion = 28
-    ext.buildToolsVersion = "28.0.1"
-    ext.supportLibVersion = "27.1.1"
+    ext.sdkVersion = 31
+    ext.buildToolsVersion = "30.0.2"
+    ext.benManes_version = "0.21.0"
 
     repositories {
         google()
-        jcenter()
         mavenCentral()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:7.0.3'
-        classpath 'com.github.ben-manes:gradle-versions-plugin:0.14.0'
+        classpath "com.github.ben-manes:gradle-versions-plugin:$benManes_version"
     }
 }
 
 allprojects {
     repositories {
         google()
-        jcenter()
         mavenCentral()
         mavenLocal()
         maven { url 'https://jitpack.io' }
