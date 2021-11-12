@@ -44,9 +44,6 @@ version = "1.0.10"
 def appCompat_version = "1.3.1"
 def weakHandler_version = "1.1"
 def kotlin_coroutines = "1.5.2"
-def jUnit_version = "4.13.2"
-def mockk_version = "1.12.0"
-def espressoCore_version = "3.1.0"
 def desugaring_version = "1.1.5"
 
 def compiler = javaToolchains.compilerFor {
@@ -60,7 +57,7 @@ android {
         minSdkVersion 16
         targetSdkVersion sdkVersion
         versionCode 1
-        versionName version
+        versionName moduleVersion
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
     }
@@ -106,16 +103,14 @@ dependencies {
 
     /*** Lifecycle ***/
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlin_coroutines"
-    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.4.0'
-    kapt 'androidx.lifecycle:lifecycle-compiler:2.4.0'
 
     /*** Testing ***/
     testImplementation 'junit:junit:4.13.2'
     testImplementation 'io.mockk:mockk:1.12.0'
 
-    androidTestImplementation "androidx.test.ext:junit:$jUnit_version"
-    androidTestImplementation "org.mockito:mockito-android:$mockk_version"
-    androidTestImplementation("androidx.test.espresso:espresso-core:$espressoCore_version", {
+    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+    androidTestImplementation 'org.mockito:mockito-android:3.12.4'
+    androidTestImplementation('androidx.test.espresso:espresso-core:3.1.0', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
 
