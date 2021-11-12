@@ -42,6 +42,7 @@ version = "1.0.10"
 def weakHandler_version = "1.1"
 def supportTestVersion = "1.0.2"
 def espressoVersion = "3.0.2"
+def kotlin_coroutines = "1.5.2"
 
 android {
     compileSdkVersion sdkVersion
@@ -96,6 +97,7 @@ dependencies {
     implementation('androidx.appcompat:appcompat:1.1.0')
 
     /*** Lifecycle ***/
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlin_coroutines"
     implementation 'androidx.lifecycle:lifecycle-runtime:2.2.0'
     kapt 'androidx.lifecycle:lifecycle-compiler:2.2.0'
 
@@ -117,89 +119,6 @@ dependencies {
 
     /*** Documentation ***/
     dokkaHtmlPlugin("org.jetbrains.dokka:kotlin-as-java-plugin:$dokka_version")
-}
-
-
-Properties properties = new Properties()
-if (project.rootProject.file("local.properties").exists()) {
-    properties.load(project.rootProject.file('local.properties').newDataInputStream())
-}
-
-afterEvaluate {
-    publishing {
-        repositories {
-            maven {
-                url = "s3://maven-bandyer/releases/"
-                credentials(AwsCredentials) {
-                    accessKey = properties.getProperty("maven.accessKey")
-                    secretKey = properties.getProperty("maven.secretKey")
-                }
-            }
-        }
-
-        publications {
-            release(MavenPublication) {
-                from components.release
-                groupId = projectGroup
-                artifactId = project.getName()
-                version = version
-                artifact kdocJar
-                artifact sourcesJar
-            }
-        }
-    }
-}
-
-task invalidateCache(type: Exec) {
-    workingDir '../scripts'
-    def publishPath = "releases"
-    def packageName = projectGroup + "." + project.getName()
-    commandLine 'python', './invalidate_s3_cache.py', properties.getProperty("maven.accessKey"), properties.getProperty("maven.secretKey"), properties.getProperty("maven.distributionId"), publishPath, packageName ,version
-}
-
-task publishUpload {
-    def dryRun = true
-    def publishTask = 'publishToMavenLocal'
-    if(!dryRun) publishTask = 'publish'
-    dependsOn publishTask
-    dependsOn 'invalidateCache'
-    tasks.findByName('invalidateCache').mustRunAfter publishTask
-}
-
-task sourcesJar(type: Jar) {
-    archiveClassifier.set("sources")
-    from android.sourceSets.main.java.srcDirs
-}
-
-task dokkaDoc() {
-    dependsOn dokkaHtml
-}
-
-task publishDocs(type: Exec) {
-    workingDir '../scripts'
-    commandLine 'python', './publish_doc.py', "$projectGroup", "${project.name}", "$version"
-}
-
-dokkaHtml {
-    outputDirectory = new File("$buildDir/kDoc")
-    dokkaSourceSets {
-        configureEach {
-            reportUndocumented.set(true)
-            jdkVersion.set(8)
-            includeNonPublic.set(false)
-            skipEmptyPackages.set(true)
-        }
-    }
-}
-
-task kdocJar(type: Jar, dependsOn: dokkaHtml) {
-    classifier = 'kdoc'
-    from "$buildDir/kDoc"
-}
-
-artifacts {
-    archives kdocJar
-    archives sourcesJar
 }
 
 //////////////////////// ADD LICENSE IN AAR //////////////////////////////////
