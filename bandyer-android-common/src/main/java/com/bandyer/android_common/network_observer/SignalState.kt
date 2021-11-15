@@ -1,4 +1,4 @@
-package com.bandyer.android_common.network
+package com.bandyer.android_common.network_observer
 
 /**
  * Cell signal state

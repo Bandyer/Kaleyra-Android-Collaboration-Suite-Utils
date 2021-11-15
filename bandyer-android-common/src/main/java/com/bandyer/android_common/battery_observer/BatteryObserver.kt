@@ -1,4 +1,4 @@
-package com.bandyer.android_common.battery
+package com.bandyer.android_common.battery_observer
 
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -20,9 +20,16 @@ class BatteryObserver(context: Context) {
         MutableSharedFlow(onBufferOverflow = BufferOverflow.DROP_OLDEST, replay = 1)
     private val broadcastReceiver: BroadcastReceiver = BatteryReceiver()
 
+    private var isRegistered = false
+
     init {
-        context.registerReceiver(broadcastReceiver, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
+        start()
     }
+
+    /**
+     * Start the observer
+     */
+    fun start() = if (!isRegistered) { weakContext.get()?.registerReceiver(broadcastReceiver, IntentFilter(Intent.ACTION_BATTERY_CHANGED)); isRegistered = true } else Unit
 
     /**
      * Call to observe the battery info events
@@ -34,7 +41,7 @@ class BatteryObserver(context: Context) {
     /**
      * Stop the observer
      */
-    fun stop() { weakContext.get()?.unregisterReceiver(broadcastReceiver) }
+    fun stop() = if(isRegistered) { weakContext.get()?.unregisterReceiver(broadcastReceiver); isRegistered = false } else Unit
 
     /**
      * A broadcast receiver which handle the battery events
@@ -52,7 +59,13 @@ class BatteryObserver(context: Context) {
             val level: Int = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, defaultValue)
             val scale: Int = intent.getIntExtra(BatteryManager.EXTRA_SCALE, defaultValue)
 
-            batteryInfo.tryEmit(BatteryInfo(mapStatus(status), mapPlugged(plugged), computePercentage(level, scale)))
+            batteryInfo.tryEmit(
+                BatteryInfo(
+                    mapStatus(status),
+                    mapPlugged(plugged),
+                    computePercentage(level, scale)
+                )
+            )
         }
 
         private fun mapStatus(status: Int): BatteryInfo.State = when (status) {

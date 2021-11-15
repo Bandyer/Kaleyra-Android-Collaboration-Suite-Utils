@@ -1,4 +1,4 @@
-package com.bandyer.android_common.network
+package com.bandyer.android_common.network_observer
 
 import android.Manifest
 import androidx.annotation.RequiresPermission

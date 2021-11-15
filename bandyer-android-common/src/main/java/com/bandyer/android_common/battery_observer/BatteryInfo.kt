@@ -1,4 +1,4 @@
-package com.bandyer.android_common.battery
+package com.bandyer.android_common.battery_observer
 
 /**
  * BatteryInfo

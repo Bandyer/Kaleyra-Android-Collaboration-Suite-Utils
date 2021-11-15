@@ -1,4 +1,4 @@
-package com.bandyer.android_common.network
+package com.bandyer.android_common.network_observer
 
 import android.Manifest.permission.ACCESS_WIFI_STATE
 import android.content.BroadcastReceiver
@@ -28,9 +28,16 @@ class WiFiObserver @RequiresPermission(ACCESS_WIFI_STATE) constructor(context: C
     }
     private val broadcastReceiver: BroadcastReceiver = WiFiReceiver()
 
+    private var isRegistered = false
+
     init {
-        context.registerReceiver(broadcastReceiver, intentFilter)
+        start()
     }
+
+    /**
+     * Start the observer
+     */
+    fun start() = if(!isRegistered) { weakContext.get()?.registerReceiver(broadcastReceiver, intentFilter); isRegistered = true } else Unit
 
     /**
      * Call to observe the wifi info events
@@ -42,7 +49,7 @@ class WiFiObserver @RequiresPermission(ACCESS_WIFI_STATE) constructor(context: C
     /**
      * Stop the observer
      */
-    fun stop() = weakContext.get()?.unregisterReceiver(broadcastReceiver)
+    fun stop() = if(isRegistered) { weakContext.get()?.unregisterReceiver(broadcastReceiver); isRegistered = false } else Unit
 
     /**
      * A broadcast receiver which handle the WiFi events
