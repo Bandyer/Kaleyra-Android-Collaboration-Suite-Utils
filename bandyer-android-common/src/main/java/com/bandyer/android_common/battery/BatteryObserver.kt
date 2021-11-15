@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.BatteryManager
-import com.bandyer.android_common.battery.BatteryInfo
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.*
 import java.lang.ref.WeakReference
@@ -64,11 +63,11 @@ class BatteryObserver(context: Context) {
             else -> BatteryInfo.State.UNKNOWN
         }
 
-        private fun mapPlugged(plugged: Int): BatteryInfo.PLUGGED = when (plugged) {
-            BatteryManager.BATTERY_PLUGGED_AC -> BatteryInfo.PLUGGED.AC
-            BatteryManager.BATTERY_PLUGGED_USB -> BatteryInfo.PLUGGED.USB
-            BatteryManager.BATTERY_PLUGGED_WIRELESS -> BatteryInfo.PLUGGED.WIRELESS
-            else -> BatteryInfo.PLUGGED.UNKNOWN
+        private fun mapPlugged(plugged: Int): BatteryInfo.Plugged = when (plugged) {
+            BatteryManager.BATTERY_PLUGGED_AC -> BatteryInfo.Plugged.AC
+            BatteryManager.BATTERY_PLUGGED_USB -> BatteryInfo.Plugged.USB
+            BatteryManager.BATTERY_PLUGGED_WIRELESS -> BatteryInfo.Plugged.WIRELESS
+            else -> BatteryInfo.Plugged.UNKNOWN
         }
 
         private fun computePercentage(level: Int, scale: Int): Int =

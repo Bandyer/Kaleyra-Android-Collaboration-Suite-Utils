@@ -10,7 +10,7 @@ package com.bandyer.android_common.battery
  */
 data class BatteryInfo(
     val state: State = State.UNKNOWN,
-    val plugged: PLUGGED = PLUGGED.UNKNOWN,
+    val plugged: Plugged = Plugged.UNKNOWN,
     val percentage: Int = -1
 ) {
 
@@ -47,7 +47,7 @@ data class BatteryInfo(
     /**
      * Battery charger types
      */
-    enum class PLUGGED {
+    enum class Plugged {
         /**
          * a c
          */
