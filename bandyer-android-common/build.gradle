@@ -173,7 +173,7 @@ task invalidateCache(type: Exec) {
 }
 
 task publishUpload {
-    def dryRun = false
+    def dryRun = true
     def publishTask = 'publishToMavenLocal'
     if(!dryRun) publishTask = 'publish'
     dependsOn publishTask
