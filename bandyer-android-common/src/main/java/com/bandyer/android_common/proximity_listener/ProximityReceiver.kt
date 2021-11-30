@@ -61,7 +61,9 @@ internal class ProximityReceiver constructor(var context: AppCompatActivity?, pr
         }
     }
 
-    override fun stop() {}
+    override fun stop() {
+        sensorManager?.unregisterListener(this, proximitySensor)
+    }
 
     override fun destroy() {
         checkMainThread()
@@ -71,9 +73,7 @@ internal class ProximityReceiver constructor(var context: AppCompatActivity?, pr
         timer.cancel()
     }
 
-    override fun pause() {
-        sensorManager?.unregisterListener(this, proximitySensor)
-    }
+    override fun pause() {}
 
     override fun isNear(): Boolean {
         checkMainThread()
