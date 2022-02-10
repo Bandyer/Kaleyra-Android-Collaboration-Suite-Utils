@@ -3,7 +3,8 @@
 </p>
 
 
-[ ![Download](https://api.bintray.com/packages/bandyer/Communication/Android-Common/images/download.svg) ](https://bintray.com/bandyer/Communication/Android-Common/_latestVersion)[![Docs](https://img.shields.io/badge/docs-current-brightgreen.svg)](https://bandyer.github.io/Bandyer-Android-Common/kDoc)
+
+[![Download](https://badgen.net/maven/v/metadata-url/https/maven.bandyer.com/releases/com/bandyer/bandyer-android-common/maven-metadata.xml?label=maven.bandyer.com/releases) ](https://maven.bandyer.com/index.html#releases/com/bandyer/bandyer-android-common/)[![Android CI](https://github.com/Bandyer/Bandyer-Android-Common/actions/workflows/android.yml/badge.svg?branch=master)](https://github.com/Bandyer/Bandyer-Android-Common/actions/workflows/android.yml)[![Docs](https://img.shields.io/badge/docs-current-brightgreen.svg)](https://bandyer.github.io/Bandyer-Android-Common/kDoc)
 [![Twitter](https://img.shields.io/twitter/url/http/shields.io.svg?style=social&logo=twitter)](https://twitter.com/intent/follow?screen_name=bandyersrl)
 
 
@@ -24,7 +25,7 @@ Bandyer is a young innovative startup that enables audio/video communication and
 Download the [latest JAR](https://bintray.com/bandyer/Communication/Android-Common) or grab via Gradle:
 
 ```groovy
-implementation ("com.bandyer:bandyer-android-common:1.0.10") {
+implementation ("com.bandyer:bandyer-android-common:$latestBandyerAndroidCommonVersion") {
         exclude group: "android.arch.core"
         exclude group: "android.arch.lifecycle"
 }

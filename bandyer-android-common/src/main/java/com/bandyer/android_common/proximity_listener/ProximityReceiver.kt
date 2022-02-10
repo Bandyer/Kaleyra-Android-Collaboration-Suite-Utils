@@ -10,8 +10,6 @@ import android.os.Build
 import android.os.CountDownTimer
 import androidx.appcompat.app.AppCompatActivity
 import com.bandyer.android_common.*
-import java.lang.ref.WeakReference
-
 
 /**
  * ProximitySensorReceiver is implemented as a boolean-sensor.
@@ -61,22 +59,20 @@ internal class ProximityReceiver constructor(var context: AppCompatActivity?, pr
         }
     }
 
-    override fun stop() {}
+    override fun stop() {
+        sensorManager?.unregisterListener(this, proximitySensor)
+    }
 
     override fun destroy() {
-        checkMainThread()
         context = null
         sensorManager = null
         proximitySensor = null
         timer.cancel()
     }
 
-    override fun pause() {
-        sensorManager?.unregisterListener(this, proximitySensor)
-    }
+    override fun pause() {}
 
     override fun isNear(): Boolean {
-        checkMainThread()
         return lastStateIsNear
     }
 
@@ -87,7 +83,6 @@ internal class ProximityReceiver constructor(var context: AppCompatActivity?, pr
      * @param accuracy new accuracy value.
      */
     override fun onAccuracyChanged(sensor: Sensor, accuracy: Int) {
-        checkMainThread()
         assertIsTrue(sensor.type == Sensor.TYPE_PROXIMITY)
     }
 
@@ -95,7 +90,6 @@ internal class ProximityReceiver constructor(var context: AppCompatActivity?, pr
      *  Notifies changes of sensor event.
      */
     override fun onSensorChanged(event: SensorEvent) {
-        checkMainThread()
         assertIsTrue(event.sensor.type == Sensor.TYPE_PROXIMITY)
 
         lastEvent = event

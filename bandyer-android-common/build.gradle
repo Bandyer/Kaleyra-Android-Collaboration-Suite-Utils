@@ -42,6 +42,9 @@ def projectLicenseUrl = "https://github.com/${gitHubUsername}/${gitHubProjectNam
 def projectKeywords = ['chat', 'communication', 'android', 'video', 'conference', 'helpdesk', 'bandyer', 'webrtc', 'call', 'audio']
 def developerFullName = "Bandyer Srl"
 
+group = projectGroup
+version = "1.0.11"
+
 def appCompat_version = "1.3.1"
 def weakHandler_version = "1.1"
 def kotlin_coroutines = "1.5.2"
