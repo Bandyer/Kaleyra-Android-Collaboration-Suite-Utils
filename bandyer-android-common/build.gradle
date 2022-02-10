@@ -55,7 +55,7 @@ android {
     compileSdkVersion sdkVersion
     buildToolsVersion buildToolsVersion
     defaultConfig {
-        minSdkVersion 16
+        minSdkVersion 21
         targetSdkVersion sdkVersion
         versionCode 1
         versionName moduleVersion
@@ -67,6 +67,10 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField 'String', 'LIBRARY_VERSION_NAME', "\"$version\""
+        }
+        debug {
+            buildConfigField 'String', 'LIBRARY_VERSION_NAME', "\"$version\""
         }
     }
 
@@ -117,6 +121,7 @@ dependencies {
 
     coreLibraryDesugaring "com.android.tools:desugar_jdk_libs:$desugaring_version"
 
+    api "androidx.startup:startup-runtime:1.1.1"
 
     /*** Other Dependencies ***/
     api "com.badoo.mobile:android-weak-handler:$weakHandler_version"
