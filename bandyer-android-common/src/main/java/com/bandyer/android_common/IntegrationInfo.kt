@@ -20,22 +20,25 @@ object IntegrationInfo : Initializer<Unit> {
     /**
      * Lib info
      */
-    val libInfo by lazy { LibInfo(appPackageName) }
+    var libInfo by cached { LibInfo(appPackageName).takeIf { it.name != BuildConfig.LIBRARY_PACKAGE_NAME } }
+        private set
 
     /**
      * Device info
      */
-    val deviceInfo by lazy { DeviceInfo }
+    var deviceInfo by cached { libInfo?.let { DeviceInfo } }
+        private set
 
     /**
      * Host app info
      */
-    val hostAppInfo by lazy { HostAppInfo }
+    var hostAppInfo by cached { libInfo?.let { HostAppInfo } }
+        private set
 
     /**
      * @suppress
      */
-    override fun create(context: Context): Unit {
+    override fun create(context: Context) {
         appPackageName = context.packageName
     }
 
@@ -47,7 +50,7 @@ object IntegrationInfo : Initializer<Unit> {
     /**
      * @suppress
      */
-    override fun toString(): String = "$libInfo $HostAppInfo $DeviceInfo"
+    override fun toString() = libInfo?.let { "$libInfo $hostAppInfo $deviceInfo" } ?: ""
 }
 
 /**
@@ -143,6 +146,11 @@ object HostAppInfo : Initializer<String> {
  * Bandyer's lib info
  */
 class LibInfo internal constructor(appPackageName: String) {
+
+    companion object {
+        private const val companyPrefix = "com.bandyer"
+    }
+
     /**
      * Name
      */
@@ -157,7 +165,7 @@ class LibInfo internal constructor(appPackageName: String) {
 
     init {
         kotlin.runCatching {
-            val callerClassName = Thread.currentThread().stackTrace.last { it.className.startsWith("com.bandyer") && !it.className.startsWith(appPackageName) }.className
+            val callerClassName = Thread.currentThread().stackTrace.last { it.className.startsWith(companyPrefix) && !it.className.startsWith(appPackageName) }.className
 
             val callerPackageName = Class.forName(callerClassName).`package`!!.name
                 .split(".")
