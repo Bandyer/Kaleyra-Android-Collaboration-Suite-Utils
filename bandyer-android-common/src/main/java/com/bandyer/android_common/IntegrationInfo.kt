@@ -5,7 +5,6 @@
 
 package com.bandyer.android_common
 
-import android.app.Application
 import android.content.Context
 import android.os.Build
 import android.os.Build.VERSION
@@ -16,10 +15,12 @@ import androidx.startup.Initializer
  */
 object IntegrationInfo : Initializer<Unit> {
 
+    private lateinit var appPackageName: String
+
     /**
      * Lib info
      */
-    val libInfo by lazy { LibInfo() }
+    val libInfo by lazy { LibInfo(appPackageName) }
 
     /**
      * Device info
@@ -34,7 +35,9 @@ object IntegrationInfo : Initializer<Unit> {
     /**
      * @suppress
      */
-    override fun create(context: Context): Unit = Unit
+    override fun create(context: Context): Unit {
+        appPackageName = context.packageName
+    }
 
     /**
      * @suppress
@@ -139,7 +142,7 @@ object HostAppInfo : Initializer<String> {
 /**
  * Bandyer's lib info
  */
-class LibInfo {
+class LibInfo internal constructor(appPackageName: String) {
     /**
      * Name
      */
@@ -154,11 +157,7 @@ class LibInfo {
 
     init {
         kotlin.runCatching {
-            val filteredStack = Thread.currentThread().stackTrace.reversed().filter { it.className.startsWith("com.bandyer") }
-            // get the last bandyer class extending the application if any
-            val demoAppIndex = filteredStack.indexOfLast { kotlin.runCatching { Class.forName(it.className).asSubclass(Application::class.java) }.isSuccess }
-            // the next class will be the sdk
-            val callerClassName = filteredStack[demoAppIndex + 1].className
+            val callerClassName = Thread.currentThread().stackTrace.reversed().last { it.className.startsWith("com.bandyer") && !it.className.startsWith(appPackageName) }.className
 
             val callerPackageName = Class.forName(callerClassName).`package`!!.name
                 .split(".")
