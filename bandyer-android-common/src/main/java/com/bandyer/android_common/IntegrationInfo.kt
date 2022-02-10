@@ -157,7 +157,7 @@ class LibInfo internal constructor(appPackageName: String) {
 
     init {
         kotlin.runCatching {
-            val callerClassName = Thread.currentThread().stackTrace.reversed().last { it.className.startsWith("com.bandyer") && !it.className.startsWith(appPackageName) }.className
+            val callerClassName = Thread.currentThread().stackTrace.last { it.className.startsWith("com.bandyer") && !it.className.startsWith(appPackageName) }.className
 
             val callerPackageName = Class.forName(callerClassName).`package`!!.name
                 .split(".")
