@@ -13,6 +13,9 @@
             <meta-data
                 android:name="com.bandyer.android_common.IntegrationInfo"
                 android:value="androidx.startup" />
+            <meta-data
+                android:name="com.bandyer.android_common.ContextRetainer"
+                android:value="androidx.startup" />
         </provider>
     </application>
 </manifest>
