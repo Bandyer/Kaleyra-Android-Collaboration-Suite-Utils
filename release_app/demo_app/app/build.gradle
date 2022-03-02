@@ -6,7 +6,7 @@ android {
     buildToolsVersion buildToolsVersion
     defaultConfig {
         applicationId "com.bandyer.demo_app"
-        minSdkVersion 16
+        minSdkVersion 21
         targetSdkVersion sdkVersion
         versionCode 1
         versionName "1.0"
