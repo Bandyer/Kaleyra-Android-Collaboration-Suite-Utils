@@ -8,19 +8,21 @@ import androidx.startup.Initializer
  * Context retainer
  */
 @SuppressLint("StaticFieldLeak")
-object ContextRetainer : Initializer<Unit> {
+class ContextRetainer : Initializer<Unit> {
 
-    /**
-     * Context
-     */
-    lateinit var context: Context
-        private set
+    companion object {
+        private lateinit var mContext: Context
+        /**
+c         */
+        val context: Context
+            get() = mContext
+    }
 
     /**
      * @suppress
      */
-    override fun create(context: Context) {
-        this.context = context.applicationContext
+    override fun create(ctx: Context) {
+        mContext = ctx.applicationContext
     }
 
     /**

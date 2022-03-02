@@ -13,27 +13,29 @@ import androidx.startup.Initializer
 /**
  * Integration info representing the library, app and device details
  */
-object IntegrationInfo : Initializer<Unit> {
+class IntegrationInfo : Initializer<Unit> {
 
-    private lateinit var appPackageName: String
+    companion object {
+        private lateinit var appPackageName: String
 
-    /**
-     * Lib info
-     */
-    var libInfo by cached { LibInfo(appPackageName).takeIf { it.name != BuildConfig.LIBRARY_PACKAGE_NAME } }
-        private set
+        /**
+         * Lib info
+         */
+        var libInfo by cached { LibInfo(appPackageName).takeIf { it.name != BuildConfig.LIBRARY_PACKAGE_NAME } }
+            private set
 
-    /**
-     * Device info
-     */
-    var deviceInfo by cached { libInfo?.let { DeviceInfo } }
-        private set
+        /**
+         * Device info
+         */
+        var deviceInfo by cached { libInfo?.let { DeviceInfo } }
+            private set
 
-    /**
-     * Host app info
-     */
-    var hostAppInfo by cached { libInfo?.let { HostAppInfo } }
-        private set
+        /**
+         * Host app info
+         */
+        var hostAppInfo by cached { libInfo?.let { HostAppInfo } }
+            private set
+    }
 
     /**
      * @suppress
@@ -56,37 +58,39 @@ object IntegrationInfo : Initializer<Unit> {
 /**
  * Device info
  */
-object DeviceInfo : Initializer<String> {
+class DeviceInfo : Initializer<String> {
 
-    /**
-     * Platform Operating System
-     */
-    val platformOS: String = VERSION.RELEASE ?: "Unknown"
+    companion object {
+        /**
+         * Platform Operating System
+         */
+        val platformOS: String = VERSION.RELEASE ?: "Unknown"
 
-    /**
-     * Android Sdk Version
-     */
-    val sdkVersion: String = "${VERSION.SDK_INT}"
+        /**
+         * Android Sdk Version
+         */
+        val sdkVersion: String = "${VERSION.SDK_INT}"
 
-    /**
-     * Manufacturer Name
-     */
-    val name: String = Build.MANUFACTURER ?: "Unknown"
+        /**
+         * Manufacturer Name
+         */
+        val name: String = Build.MANUFACTURER ?: "Unknown"
 
-    /**
-     * Supported device Arch (arm64-v8a etc)
-     */
-    val arch: String = kotlin.runCatching { Build.SUPPORTED_ABIS.joinToString(",") }.getOrDefault("Unknown")
+        /**
+         * Supported device Arch (arm64-v8a etc)
+         */
+        val arch: String = kotlin.runCatching { Build.SUPPORTED_ABIS.joinToString(",") }.getOrDefault("Unknown")
 
-    /**
-     * Phone model
-     */
-    val model: String = Build.DEVICE ?: "Unknown"
+        /**
+         * Phone model
+         */
+        val model: String = Build.DEVICE ?: "Unknown"
 
-    /**
-     * Finger print
-     */
-    val fingerPrint: String = Build.FINGERPRINT
+        /**
+         * Finger print
+         */
+        val fingerPrint: String = Build.FINGERPRINT
+    }
 
     /**
      * @suppress
@@ -107,27 +111,33 @@ object DeviceInfo : Initializer<String> {
 /**
  * Host app info
  */
-object HostAppInfo : Initializer<String> {
+class HostAppInfo : Initializer<String> {
 
-    /**
-     * Name
-     */
-    lateinit var name: String
-        private set
+    companion object {
+        private lateinit var mName: String
 
-    /**
-     * Version
-     */
-    lateinit var version: String
-        private set
+        private lateinit var mVersion: String
+
+        /**
+         * Name
+         */
+        val name: String
+            get() = mName
+
+        /**
+         * Version
+         */
+        val version: String
+            get() = mVersion
+    }
 
     /**
      * @suppress
      */
     override fun create(context: Context): String {
         val packageInfo = context.packageManager.getPackageInfo(context.packageName, 0)
-        name = context.packageName
-        version = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) "${packageInfo?.longVersionCode}" else "${packageInfo?.versionCode?.toLong()}"
+        mName = context.packageName
+        mVersion = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) "${packageInfo?.longVersionCode}" else "${packageInfo?.versionCode?.toLong()}"
         return toString()
     }
 
