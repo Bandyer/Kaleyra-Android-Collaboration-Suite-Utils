@@ -16,6 +16,7 @@ import androidx.startup.Initializer
 class IntegrationInfo : Initializer<Unit> {
 
     companion object {
+
         private lateinit var appPackageName: String
 
         /**
@@ -35,6 +36,8 @@ class IntegrationInfo : Initializer<Unit> {
          */
         var hostAppInfo by cached { libInfo?.let { HostAppInfo } }
             private set
+
+        override fun toString() = libInfo?.let { "$libInfo $hostAppInfo $deviceInfo" } ?: ""
     }
 
     /**
@@ -52,7 +55,7 @@ class IntegrationInfo : Initializer<Unit> {
     /**
      * @suppress
      */
-    override fun toString() = libInfo?.let { "$libInfo $hostAppInfo $deviceInfo" } ?: ""
+    override fun toString() = IntegrationInfo.toString()
 }
 
 /**
@@ -90,6 +93,8 @@ class DeviceInfo : Initializer<String> {
          * Finger print
          */
         val fingerPrint: String = Build.FINGERPRINT
+
+        override fun toString() = "OS/Android/$platformOS Device/$name/$model ABIs/$arch API/$sdkVersion Fingerprint/${Build.FINGERPRINT}"
     }
 
     /**
@@ -105,7 +110,7 @@ class DeviceInfo : Initializer<String> {
     /**
      * @suppress
      */
-    override fun toString() = "OS/Android/$platformOS Device/$name/$model ABIs/$arch API/$sdkVersion Fingerprint/${Build.FINGERPRINT}"
+    override fun toString() = DeviceInfo.toString()
 }
 
 /**
@@ -129,6 +134,8 @@ class HostAppInfo : Initializer<String> {
          */
         val version: String
             get() = mVersion
+
+        override fun toString() = "Host/${name}/${version}"
     }
 
     /**
@@ -149,7 +156,7 @@ class HostAppInfo : Initializer<String> {
     /**
      * @suppress
      */
-    override fun toString() = "Host/${name}/${version}"
+    override fun toString() = HostAppInfo.toString()
 }
 
 /**
