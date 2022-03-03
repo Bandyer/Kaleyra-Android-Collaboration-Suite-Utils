@@ -11,10 +11,13 @@ import android.os.Build.VERSION
 import androidx.startup.Initializer
 
 /**
- * Integration info representing the library, app and device details
+ * IntegrationInfo representing the library, app and device details
  */
 class IntegrationInfo : Initializer<Unit> {
 
+    /**
+     * IntegrationInfo instance
+     */
     companion object {
 
         private lateinit var appPackageName: String
@@ -59,10 +62,13 @@ class IntegrationInfo : Initializer<Unit> {
 }
 
 /**
- * Device info
+ * DeviceInfo represents info about the runnning device
  */
 class DeviceInfo : Initializer<String> {
 
+    /**
+     * DeviceInfo instance
+     */
     companion object {
         /**
          * Platform Operating System
@@ -114,10 +120,13 @@ class DeviceInfo : Initializer<String> {
 }
 
 /**
- * Host app info
+ * HostAppInfo represents info about
  */
 class HostAppInfo : Initializer<String> {
 
+    /**
+     * HostAppInfo instance
+     */
     companion object {
         private lateinit var mName: String
 
@@ -160,10 +169,13 @@ class HostAppInfo : Initializer<String> {
 }
 
 /**
- * Bandyer's lib info
+ * LibInfo representing the library info
  */
 class LibInfo internal constructor(appPackageName: String) {
 
+    /**
+     * LibInfo instance
+     */
     companion object {
         private const val companyPrefix = "com.bandyer"
     }

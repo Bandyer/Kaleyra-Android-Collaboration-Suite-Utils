@@ -5,11 +5,14 @@ import android.content.Context
 import androidx.startup.Initializer
 
 /**
- * Context retainer
+ * Context Retainer holder for application context
  */
 @SuppressLint("StaticFieldLeak")
 class ContextRetainer : Initializer<Unit> {
 
+    /**
+     * Context Retainer instance
+     */
     companion object {
         private lateinit var mContext: Context
 
