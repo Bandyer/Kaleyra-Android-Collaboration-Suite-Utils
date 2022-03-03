@@ -50,10 +50,6 @@ def weakHandler_version = "1.1"
 def kotlin_coroutines = "1.5.2"
 def desugaring_version = "1.1.5"
 
-def compiler = javaToolchains.compilerFor {
-    languageVersion = JavaLanguageVersion.of(11)
-}
-
 android {
     compileSdkVersion sdkVersion
     buildToolsVersion buildToolsVersion
@@ -87,7 +83,6 @@ android {
     // For Kotlin projects
     kotlinOptions {
         jvmTarget = "11"
-        jdkHome = compiler.get().metadata.installationPath.asFile.absolutePath
     }
 
     lintOptions {
