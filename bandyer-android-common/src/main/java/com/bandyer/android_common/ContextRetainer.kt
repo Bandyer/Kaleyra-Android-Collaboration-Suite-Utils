@@ -12,8 +12,10 @@ class ContextRetainer : Initializer<Unit> {
 
     companion object {
         private lateinit var mContext: Context
+
         /**
-c         */
+         * Application context
+         */
         val context: Context
             get() = mContext
     }
