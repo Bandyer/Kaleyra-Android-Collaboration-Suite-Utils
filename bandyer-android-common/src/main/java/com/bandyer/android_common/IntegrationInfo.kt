@@ -40,6 +40,9 @@ class IntegrationInfo : Initializer<Unit> {
         var hostAppInfo by cached { libInfo?.let { HostAppInfo } }
             private set
 
+        /**
+         * @suppress
+         */
         override fun toString() = libInfo?.let { "$libInfo $hostAppInfo $deviceInfo" } ?: ""
     }
 
@@ -100,6 +103,9 @@ class DeviceInfo : Initializer<String> {
          */
         val fingerPrint: String = Build.FINGERPRINT
 
+        /**
+         * @suppress
+         */
         override fun toString() = "OS/Android/$platformOS Device/$name/$model ABIs/$arch API/$sdkVersion Fingerprint/${Build.FINGERPRINT}"
     }
 
@@ -120,7 +126,7 @@ class DeviceInfo : Initializer<String> {
 }
 
 /**
- * HostAppInfo represents info about
+ * HostAppInfo represents info about the application that is hosting the library
  */
 class HostAppInfo : Initializer<String> {
 
@@ -144,6 +150,9 @@ class HostAppInfo : Initializer<String> {
         val version: String
             get() = mVersion
 
+        /**
+         * @suppress
+         */
         override fun toString() = "Host/${name}/${version}"
     }
 
