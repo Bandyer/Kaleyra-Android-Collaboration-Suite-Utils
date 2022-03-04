@@ -236,5 +236,5 @@ class LibInfo internal constructor(appPackageName: String) {
     /**
      * @suppress
      */
-    override fun toString(): String = "Kaleyra/${name}/${version}"
+    override fun toString(): String = "Bandyer/${name}/${version}"
 }
