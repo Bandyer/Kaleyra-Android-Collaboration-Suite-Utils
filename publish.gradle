@@ -1,6 +1,6 @@
-ext.moduleGroupId = "com.bandyer"
-ext.moduleProductId = "android-common"
-ext.moduleVersion = "1.0.10"
+ext.moduleGroupId = "com.kaleyra"
+ext.moduleProductId = "collaboration-suite-utils"
+ext.moduleVersion = "1.0.0"
 
 Properties properties = new Properties()
 if (project.rootProject.file("local.properties").exists()) {
@@ -61,9 +61,6 @@ dokkaHtml {
             jdkVersion.set(8)
             includeNonPublic.set(false)
             skipEmptyPackages.set(true)
-            externalDocumentationLink {
-                url.set(new URL("https://docs.bandyer.com/Bandyer-Android-Common/kDoc/bandyer-android-common/"))
-            }
         }
     }
 }

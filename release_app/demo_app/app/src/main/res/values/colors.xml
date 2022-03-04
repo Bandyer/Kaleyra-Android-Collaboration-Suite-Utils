@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~  Copyright (C) 2022 Kaleyra S.p.a. All Rights Reserved.
+  ~  See LICENSE.txt for licensing information
+  -->
+
 <resources>
     <color name="colorPrimaryDark">#FF0c2e41</color>
     <color name="colorPrimary">#FF0277BD</color>

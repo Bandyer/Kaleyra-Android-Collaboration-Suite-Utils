@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~  Copyright (C) 2022 Kaleyra S.p.a. All Rights Reserved.
+  ~  See LICENSE.txt for licensing information
+  -->
+
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item>
         <shape android:shape="oval">

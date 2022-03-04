@@ -1,2 +1,2 @@
-include ':demo_app', ':bandyer-android-common'
+include ':demo_app', ':collaboration-suite-utils'
 project(':demo_app').projectDir = file('release_app/demo_app/app')

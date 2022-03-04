@@ -5,7 +5,7 @@ android {
     compileSdkVersion sdkVersion
     buildToolsVersion buildToolsVersion
     defaultConfig {
-        applicationId "com.bandyer.demo_app"
+        applicationId "com.kaleyra.collaboration_suite_utils.demo_app"
         minSdkVersion 21
         targetSdkVersion sdkVersion
         versionCode 1
@@ -37,5 +37,5 @@ dependencies {
     })
 
     /*** Library ***/
-    implementation(project(":bandyer-android-common"))
+    implementation(project(':collaboration-suite-utils'))
 }

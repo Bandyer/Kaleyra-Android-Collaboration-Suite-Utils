@@ -1,4 +1,9 @@
+<!--
+  ~  Copyright (C) 2022 Kaleyra S.p.a. All Rights Reserved.
+  ~  See LICENSE.txt for licensing information
+  -->
+
 <resources>
-    <string name="app_name">Common</string>
+    <string name="app_name">Collaboration Suite Utils</string>
     <string name="title_activity_main">MainActivity</string>
 </resources>
