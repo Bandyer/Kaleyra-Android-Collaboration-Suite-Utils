@@ -27,7 +27,7 @@ afterEvaluate {
             release(MavenPublication) {
                 from components.release
                 groupId = moduleGroupId
-                artifactId = moduleProductId + "-" + project.getName()
+                artifactId = project.getName()
                 version = moduleVersion
                 artifact kdocJar
                 artifact sourcesJar
