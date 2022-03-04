@@ -58,7 +58,7 @@ dokkaHtml {
         configureEach {
             moduleName.set(project.name)
             reportUndocumented.set(true)
-            jdkVersion.set(11)
+            jdkVersion.set(8)
             includeNonPublic.set(false)
             skipEmptyPackages.set(true)
             externalDocumentationLink {
