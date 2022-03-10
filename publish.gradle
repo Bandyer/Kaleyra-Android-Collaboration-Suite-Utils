@@ -1,6 +1,6 @@
 ext.moduleGroupId = "com.kaleyra"
 ext.moduleProductId = "collaboration-suite-utils"
-ext.moduleVersion = "1.0.0"
+ext.moduleVersion = "2.0.0"
 
 Properties properties = new Properties()
 if (project.rootProject.file("local.properties").exists()) {
