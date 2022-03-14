@@ -48,8 +48,12 @@ class IntegrationInfo : Initializer<Unit> {
     /**
      * @suppress
      */
+    @OptIn(ExperimentalStdlibApi::class)
     override fun create(context: Context) {
-        appPackageName = context.packageName
+        appPackageName = with(context.packageName) {
+            // skips fourth level package declaration
+            "^[^.]*(?:.[^.]*){2}".toRegex().matchAt(this, 0)?.value ?: this
+        }
     }
 
     /**
