@@ -1,6 +1,6 @@
 ext.moduleGroupId = "com.kaleyra"
 ext.moduleProductId = "collaboration-suite-utils"
-ext.moduleVersion = "2.0.0"
+ext.moduleVersion = "2.0.1"
 
 Properties properties = new Properties()
 if (project.rootProject.file("local.properties").exists()) {
@@ -53,7 +53,7 @@ task publishUpload {
 }
 
 dokkaHtml {
-    outputDirectory = new File("$buildDir/kDoc")
+    outputDirectory = new File("$buildDir/docs")
     dokkaSourceSets {
         configureEach {
             moduleName.set(project.name)

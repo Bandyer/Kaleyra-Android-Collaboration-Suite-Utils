@@ -64,11 +64,12 @@ if branchExists != 0:
     if createBranch != 0:
         sys.exit("gp-pages branch did not exist and the creation of a new branch failed.")
 
+copy_and_overwrite("%s/build/docs/" % sdk_module, "docs/")
 copy_and_overwrite("%s/build/kDoc/" % sdk_module, "kDoc/")
 copy_and_overwrite("%s/build/jDoc/" % sdk_module, "jDoc/")
 
 # commit documentation
-os.system("git add kDoc/ jDoc/")
+os.system("git add docs/ kDoc/ jDoc/")
 
 os.system("git commit -m 'release v%s'" % sys.argv[3])
 os.system("git push github")
