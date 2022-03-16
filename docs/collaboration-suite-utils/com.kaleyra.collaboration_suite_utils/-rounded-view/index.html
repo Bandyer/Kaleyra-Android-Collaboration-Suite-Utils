@@ -1,0 +1,108 @@
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>RoundedView</title>
+<link href="../../../images/logo-icon.svg" rel="icon" type="image/svg"><script>var pathToRoot = "../../../";</script><script type="text/javascript" src="../../../scripts/sourceset_dependencies.js" async="async"></script><link href="../../../styles/style.css" rel="Stylesheet"><link href="../../../styles/logo-styles.css" rel="Stylesheet"><link href="../../../styles/jetbrains-mono.css" rel="Stylesheet"><link href="../../../styles/main.css" rel="Stylesheet"><script type="text/javascript" src="../../../scripts/clipboard.js" async="async"></script><script type="text/javascript" src="../../../scripts/navigation-loader.js" async="async"></script><script type="text/javascript" src="../../../scripts/platform-content-handler.js" async="async"></script><script type="text/javascript" src="../../../scripts/main.js" async="async"></script>  </head>
+  <body>
+    <div id="container">
+      <div id="leftColumn"><a href="../../../index.html">
+          <div id="logo"></div>
+        </a>
+        <div id="paneSearch"></div>
+        <div id="sideMenu"></div>
+      </div>
+      <div id="main">
+        <div id="leftToggler"><span class="icon-toggler"></span></div>
+<script type="text/javascript" src="../../../scripts/main.js"></script>        <div class="main-content" id="content" pageIds="collaboration-suite-utils::com.kaleyra.collaboration_suite_utils/RoundedView///PointingToDeclaration//-859202508">
+          <div class="navigation-wrapper" id="navigation-wrapper">
+            <div class="breadcrumbs"><a href="../../../index.html">collaboration-suite-utils</a>/<a href="../index.html">com.kaleyra.collaboration_suite_utils</a>/<a href="index.html">RoundedView</a></div>
+            <div class="pull-right d-flex">
+              <div id="searchBar"></div>
+            </div>
+          </div>
+          <div class="cover ">
+            <h1 class="cover"><span>Rounded</span><wbr></wbr><span><span>View</span></span></h1>
+            <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":collaboration-suite-utils:dokkaHtml/release"><div class="symbol monospace">public interface <a href="index.html">RoundedView</a> implements <a href="../-roundable/index.html">Roundable</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><p class="paragraph">View that can be rounded</p><p class="paragraph">!--- IMPORTANT ---! On devices below LOLLIPOP the round can not be applied to backgrounds!!</p><p class="paragraph">To be used in java you need to implement all the abstract methods and forward them by RoundedView.DefaultImpl.methods</p><p class="paragraph">For example:</p><div class="sample-container"><code class="" theme="idea"><pre>public class TestButton extends AppCompatImageButton implements RoundedView {<br><br>     public TestButton(Context context) {<br>          this(context, null);<br>     }<br><br>     public TestButton(Context context, AttributeSet attrs) {<br>         this(context, attrs, 0);<br>     }<br><br>     public TestButton(Context context, AttributeSet attrs, int defStyleAttr) {<br>         super(context, attrs, defStyleAttr);<br>         round(this, true);<br>     }<br><br>     @Override<br>     protected void onDraw(Canvas canvas) {<br>         setRoundClip(this, canvas);<br>         super.onDraw(canvas); // IMPORTANT call this after setRoundClip<br>     }<br><br>     @Override<br>     public &lt;T extends View &amp; Roundable&gt; void setRoundClip(T $receiver, Canvas canvas) {<br>         RoundedView.DefaultImpls.setRoundClip(this, this, canvas);<br>     }<br><br>     @Override<br>     public &lt;T extends View &amp; Roundable&gt; void round(T $receiver, boolean rounded) {<br>         RoundedView.DefaultImpls.round(this, this, rounded);<br>     }<br><br>     @Override<br>     public &lt;T extends View &amp; Roundable&gt; void setCornerRadius(T $receiver, float radius) {<br>         RoundedView.DefaultImpls.setCornerRadius(this, this, radius);<br>     }<br><br>     @Override<br>     public &lt;T extends View &amp; Roundable&gt; void round(boolean rounded) {<br>         RoundedView.DefaultImpls.round(this, rounded);<br>     }<br><br>     @Override<br>     public &lt;T extends View &amp; Roundable&gt; void setCornerRadius(float radius) {<br>         RoundedView.DefaultImpls.setCornerRadius(this, radius);<br>     }</pre></code></div><h4 class="">Author</h4><p class="paragraph">kristiyan</p></div></div>
+          </div>
+          <div class="tabbedcontent">
+            <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="Functions">Functions</button></div>
+            <div class="tabs-section-body">
+              <h2 class="">Functions</h2>
+              <div class="table" data-togglable="Functions"><a data-name="-1898484827%2FFunctions%2F-859202508" anchor-label="radius" id="-1898484827%2FFunctions%2F-859202508" data-filterable-set=":collaboration-suite-utils:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":collaboration-suite-utils:dokkaHtml/release" data-filterable-set=":collaboration-suite-utils:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="radius.html"><span><span>radius</span></span></a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1898484827%2FFunctions%2F-859202508"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":collaboration-suite-utils:dokkaHtml/release" data-filterable-set=":collaboration-suite-utils:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":collaboration-suite-utils:dokkaHtml/release"><div class="symbol monospace block"><a href="https://developer.android.com/reference/kotlin/java/lang/Float.html">Float</a> <a href="radius.html">radius</a>&lt;T extends <a href="https://developer.android.com/reference/kotlin/android/view/View.html">View</a>, <a href="../-roundable/index.html">Roundable</a>&gt;()<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="symbol monospace block"><a href="https://developer.android.com/reference/kotlin/java/lang/Float.html">Float</a> <a href="radius.html">radius</a>&lt;T extends <a href="https://developer.android.com/reference/kotlin/android/view/View.html">View</a>, <a href="../-roundable/index.html">Roundable</a>&gt;(<a href="radius.html">T</a> $self)<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<div class="brief "><p class="paragraph">Return the current radius</p></div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="1421313041%2FFunctions%2F-859202508" anchor-label="round" id="1421313041%2FFunctions%2F-859202508" data-filterable-set=":collaboration-suite-utils:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":collaboration-suite-utils:dokkaHtml/release" data-filterable-set=":collaboration-suite-utils:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="round.html"><span><span>round</span></span></a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1421313041%2FFunctions%2F-859202508"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":collaboration-suite-utils:dokkaHtml/release" data-filterable-set=":collaboration-suite-utils:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":collaboration-suite-utils:dokkaHtml/release"><div class="symbol monospace block"><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a> <a href="round.html">round</a>&lt;T extends <a href="https://developer.android.com/reference/kotlin/android/view/View.html">View</a>, <a href="../-roundable/index.html">Roundable</a>&gt;(<a href="https://developer.android.com/reference/kotlin/java/lang/Boolean.html">Boolean</a> rounded)<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="symbol monospace block"><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a> <a href="round.html">round</a>&lt;T extends <a href="https://developer.android.com/reference/kotlin/android/view/View.html">View</a>, <a href="../-roundable/index.html">Roundable</a>&gt;(<a href="round.html">T</a> $self, <a href="https://developer.android.com/reference/kotlin/java/lang/Boolean.html">Boolean</a> rounded)<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<div class="brief "><p class="paragraph">Enable circular clipping on canvas for RoundedView</p></div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="-1898720631%2FFunctions%2F-859202508" anchor-label="rounded" id="-1898720631%2FFunctions%2F-859202508" data-filterable-set=":collaboration-suite-utils:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":collaboration-suite-utils:dokkaHtml/release" data-filterable-set=":collaboration-suite-utils:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="rounded.html"><span><span>rounded</span></span></a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1898720631%2FFunctions%2F-859202508"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":collaboration-suite-utils:dokkaHtml/release" data-filterable-set=":collaboration-suite-utils:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":collaboration-suite-utils:dokkaHtml/release"><div class="symbol monospace block"><a href="https://developer.android.com/reference/kotlin/java/lang/Boolean.html">Boolean</a> <a href="rounded.html">rounded</a>&lt;T extends <a href="https://developer.android.com/reference/kotlin/android/view/View.html">View</a>, <a href="../-roundable/index.html">Roundable</a>&gt;()<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="symbol monospace block"><a href="https://developer.android.com/reference/kotlin/java/lang/Boolean.html">Boolean</a> <a href="rounded.html">rounded</a>&lt;T extends <a href="https://developer.android.com/reference/kotlin/android/view/View.html">View</a>, <a href="../-roundable/index.html">Roundable</a>&gt;(<a href="rounded.html">T</a> $self)<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<div class="brief "><p class="paragraph">Return if is rounded</p></div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="525505075%2FFunctions%2F-859202508" anchor-label="setCornerRadius" id="525505075%2FFunctions%2F-859202508" data-filterable-set=":collaboration-suite-utils:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":collaboration-suite-utils:dokkaHtml/release" data-filterable-set=":collaboration-suite-utils:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="set-corner-radius.html"><span>set</span><wbr></wbr><span>Corner</span><wbr></wbr><span><span>Radius</span></span></a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="525505075%2FFunctions%2F-859202508"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":collaboration-suite-utils:dokkaHtml/release" data-filterable-set=":collaboration-suite-utils:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":collaboration-suite-utils:dokkaHtml/release"><div class="symbol monospace block"><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a> <a href="set-corner-radius.html">setCornerRadius</a>&lt;T extends <a href="https://developer.android.com/reference/kotlin/android/view/View.html">View</a>, <a href="../-roundable/index.html">Roundable</a>&gt;(<a href="https://developer.android.com/reference/kotlin/java/lang/Float.html">Float</a> radius)<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="symbol monospace block"><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a> <a href="set-corner-radius.html">setCornerRadius</a>&lt;T extends <a href="https://developer.android.com/reference/kotlin/android/view/View.html">View</a>, <a href="../-roundable/index.html">Roundable</a>&gt;(<a href="set-corner-radius.html">T</a> $self, <a href="https://developer.android.com/reference/kotlin/java/lang/Float.html">Float</a> radius)<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<div class="brief "><p class="paragraph">Enable radius clipping on canvas for RoundedView</p></div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer"><span class="go-to-top-icon"><a href="#content"></a></span><span>© 2022 Copyright</span><span class="pull-right"><span>Generated by </span><a href="https://github.com/Kotlin/dokka"><span>dokka</span><span class="padded-icon"></span></a></span></div>
+      </div>
+    </div>
+  </body>
+</html>
+

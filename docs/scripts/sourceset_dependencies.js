@@ -1,0 +1,1 @@
+sourceset_dependencies='{":collaboration-suite-utils:dokkaHtml/androidTestRelease":[],":collaboration-suite-utils:dokkaHtml/debug":[],":collaboration-suite-utils:dokkaHtml/main":[],":collaboration-suite-utils:dokkaHtml/release":[]}'
