@@ -32,10 +32,10 @@ implementation "com.kaleyra:collaboration-suite-utils:$latestKaleyraCollaboratio
 
 You can find the complete documentation in two different styles
 
-Kotlin Doc: [https://bandyer.github.io/Bandyer-Android-Common/kDoc/](https://bandyer.github.io/Bandyer-Android-Common/kDoc/bandyer-android-common/)
+Kotlin Doc: [https://docs.bandyer.com/Kaleyra-Android-Collaboration-Suite-Utils/](https://docs.bandyer.com/Kaleyra-Android-Collaboration-Suite-Utils/)
 
 ## Support
-To get basic support please submit an [Issue](https://github.com/Bandyer/Bandyer-Android-Common/issues) 
+To get basic support please submit an [Issue](https://github.com/Bandyer/Kaleyra-Android-Collaboration-Suite-Utils/issues) 
 
 If you prefer commercial support, please contact [kaleyra](https://kaleyra.com) by mail: <mailto:info@bandyer.com>.
 
