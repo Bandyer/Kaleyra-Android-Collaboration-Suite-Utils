@@ -7,15 +7,16 @@ package com.kaleyra.collaboration_suite_utils.audio
 import android.content.Context
 import android.media.AudioManager.FLAG_SHOW_UI
 import android.os.Build
+import com.kaleyra.collaboration_suite_utils.ContextRetainer
 
 /**
  *  Manager for the call's audio
  *
  * @constructor
  */
-class CallAudioManager(context: Context) {
+object CallAudioManager {
 
-    private val manager = context.getSystemService(Context.AUDIO_SERVICE) as android.media.AudioManager
+    private val manager = ContextRetainer.context.getSystemService(Context.AUDIO_SERVICE) as android.media.AudioManager
 
     /**
      * The current call volume. This volume goes from 0 to 5.
