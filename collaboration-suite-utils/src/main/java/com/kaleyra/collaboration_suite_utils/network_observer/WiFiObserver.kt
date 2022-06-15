@@ -11,26 +11,31 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.net.wifi.WifiManager
 import androidx.annotation.RequiresPermission
+import com.kaleyra.collaboration_suite_utils.ContextRetainer
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
-import java.lang.ref.WeakReference
 
 /**
  * Utility class which allows to observe the WiFi info events
  */
-class WiFiObserver @RequiresPermission(ACCESS_WIFI_STATE) constructor(context: Context) {
+class WiFiObserver @RequiresPermission(ACCESS_WIFI_STATE) constructor() {
 
-    private val weakContext: WeakReference<Context> = WeakReference(context)
-    private val wifiInfo: MutableSharedFlow<WiFiInfo> =
-        MutableSharedFlow(onBufferOverflow = BufferOverflow.DROP_OLDEST, replay = 1)
-    private val wifiManager = context.applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager
+    private val wifiManager = ContextRetainer.context.applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager
+
     private val intentFilter = IntentFilter().apply {
         addAction(WifiManager.WIFI_STATE_CHANGED_ACTION)
         addAction(WifiManager.RSSI_CHANGED_ACTION)
     }
     private val broadcastReceiver: BroadcastReceiver = WiFiReceiver()
+
+    private val _wifiInfo: MutableSharedFlow<WiFiInfo> =
+        MutableSharedFlow(onBufferOverflow = BufferOverflow.DROP_OLDEST, replay = 1)
+
+    /**
+     * The wifi info flow
+     */
+    val wifiInfo = _wifiInfo.asSharedFlow()
 
     private var isRegistered = false
 
@@ -41,19 +46,12 @@ class WiFiObserver @RequiresPermission(ACCESS_WIFI_STATE) constructor(context: C
     /**
      * Start the observer
      */
-    fun start() = if(!isRegistered) { weakContext.get()?.registerReceiver(broadcastReceiver, intentFilter); isRegistered = true } else Unit
-
-    /**
-     * Call to observe the wifi info events
-     *
-     * @return SharedFlow<WiFiInfo>
-     */
-    fun observe(): SharedFlow<WiFiInfo> = wifiInfo.asSharedFlow()
+    fun start() = if(!isRegistered) {ContextRetainer.context.registerReceiver(broadcastReceiver, intentFilter); isRegistered = true } else Unit
 
     /**
      * Stop the observer
      */
-    fun stop() = if(isRegistered) { weakContext.get()?.unregisterReceiver(broadcastReceiver); isRegistered = false } else Unit
+    fun stop() = if(isRegistered) { ContextRetainer.context.unregisterReceiver(broadcastReceiver); isRegistered = false } else Unit
 
     /**
      * A broadcast receiver which handle the WiFi events
@@ -70,7 +68,7 @@ class WiFiObserver @RequiresPermission(ACCESS_WIFI_STATE) constructor(context: C
                 state = intent.getIntExtra(WifiManager.EXTRA_WIFI_STATE, WifiManager.WIFI_STATE_UNKNOWN)
 
             val rssi = wifiManager.connectionInfo.rssi
-            wifiInfo.tryEmit(WiFiInfo(mapState(state), WiFiInfo.Level.getValue(rssi)))
+            _wifiInfo.tryEmit(WiFiInfo(mapState(state), WiFiInfo.Level.getValue(rssi)))
         }
 
         private fun mapState(state: Int): WiFiInfo.State = when (state) {

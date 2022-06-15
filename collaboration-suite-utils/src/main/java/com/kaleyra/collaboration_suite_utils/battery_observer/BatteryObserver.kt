@@ -9,20 +9,27 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.BatteryManager
+import com.kaleyra.collaboration_suite_utils.ContextRetainer
 import kotlinx.coroutines.channels.BufferOverflow
-import kotlinx.coroutines.flow.*
-import java.lang.ref.WeakReference
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlin.math.roundToInt
 
 /**
  * Utility class which allows to observe the battery info events
  */
-class BatteryObserver(context: Context) {
+class BatteryObserver {
 
-    private val weakContext: WeakReference<Context> = WeakReference(context)
-    private val batteryInfo: MutableSharedFlow<BatteryInfo> =
-        MutableSharedFlow(onBufferOverflow = BufferOverflow.DROP_OLDEST, replay = 1)
     private val broadcastReceiver: BroadcastReceiver = BatteryReceiver()
+
+    private val _batteryInfo: MutableSharedFlow<BatteryInfo> =
+        MutableSharedFlow(onBufferOverflow = BufferOverflow.DROP_OLDEST, replay = 1)
+
+    /**
+     * The battery info flow
+     */
+    val batteryInfo: SharedFlow<BatteryInfo> = _batteryInfo.asSharedFlow()
 
     private var isRegistered = false
 
@@ -33,19 +40,12 @@ class BatteryObserver(context: Context) {
     /**
      * Start the observer
      */
-    fun start() = if (!isRegistered) { weakContext.get()?.registerReceiver(broadcastReceiver, IntentFilter(Intent.ACTION_BATTERY_CHANGED)); isRegistered = true } else Unit
-
-    /**
-     * Call to observe the battery info events
-     *
-     * @return SharedFlow<BatteryInfo>
-     */
-    fun observe(): SharedFlow<BatteryInfo> = batteryInfo.asSharedFlow()
+    fun start() = if (!isRegistered) { ContextRetainer.context.registerReceiver(broadcastReceiver, IntentFilter(Intent.ACTION_BATTERY_CHANGED)); isRegistered = true } else Unit
 
     /**
      * Stop the observer
      */
-    fun stop() = if(isRegistered) { weakContext.get()?.unregisterReceiver(broadcastReceiver); isRegistered = false } else Unit
+    fun stop() = if(isRegistered) { ContextRetainer.context.unregisterReceiver(broadcastReceiver); isRegistered = false } else Unit
 
     /**
      * A broadcast receiver which handle the battery events
@@ -63,7 +63,7 @@ class BatteryObserver(context: Context) {
             val level: Int = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, defaultValue)
             val scale: Int = intent.getIntExtra(BatteryManager.EXTRA_SCALE, defaultValue)
 
-            batteryInfo.tryEmit(
+            _batteryInfo.tryEmit(
                 BatteryInfo(
                     mapStatus(status),
                     mapPlugged(plugged),
