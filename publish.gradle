@@ -1,6 +1,8 @@
 ext.moduleGroupId = "com.kaleyra"
 ext.moduleProductId = "collaboration-suite-utils"
-ext.moduleVersion = "2.0.1"
+ext.moduleVersion = "2.1.0"
+
+ext.dryRun = true
 
 Properties properties = new Properties()
 if (project.rootProject.file("local.properties").exists()) {
@@ -40,11 +42,10 @@ task invalidateCache(type: Exec) {
     workingDir '../scripts'
     def publishPath = "releases"
     def packageName = moduleGroupId + "." + project.getName()
-    commandLine 'python', './invalidate_s3_cache.py', mavenAccessKey, mavenSecretKey, mavenDistributionId, publishPath, packageName, version
+    commandLine 'python3', './invalidate_s3_cache.py', mavenAccessKey, mavenSecretKey, mavenDistributionId, publishPath, packageName, version
 }
 
 task publishUpload {
-    def dryRun = true
     def publishTask = 'publishToMavenLocal'
     if (!dryRun) publishTask = 'publish'
     dependsOn publishTask
@@ -67,7 +68,7 @@ dokkaHtml {
 
 task publishDocs(type: Exec) {
     workingDir '../scripts'
-    commandLine 'python', './publish_doc.py', "$moduleGroupId", "${project.name}", "$version"
+    commandLine 'python3', './publish_doc.py', "$moduleGroupId", "${project.name}", "$version"
 }
 
 task dokkaDoc() {

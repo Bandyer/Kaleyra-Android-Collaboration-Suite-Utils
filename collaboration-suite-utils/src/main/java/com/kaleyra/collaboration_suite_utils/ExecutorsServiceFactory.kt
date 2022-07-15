@@ -28,6 +28,9 @@ object ExecutorsServiceFactory {
      * @constructor Create Handler executor
      */
     class HandlerExecutor(val handler: Handler) : Executor {
+        /**
+         * @suppress
+         */
         override fun execute(r: Runnable) = Unit.apply { handler.post(r) }
     }
 
@@ -38,6 +41,9 @@ object ExecutorsServiceFactory {
      * @constructor Create Handler executor
      */
     class WeakHandlerExecutor(val handler: WeakHandler) : Executor {
+        /**
+         * @suppress
+         */
         override fun execute(r: Runnable) = Unit.apply { handler.post(r) }
     }
 

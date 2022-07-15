@@ -25,7 +25,14 @@ open class ExecutorCancellableCompletionService<V, E : Executor>(
     private val completionQueue: LinkedBlockingQueue<Future<V>> = LinkedBlockingQueue()
 ) : ExecutorCompletionService<V>(executor, completionQueue) {
 
+    /**
+     * @suppress
+     */
     override fun submit(task: Callable<V>): Future<V> = super.submit(task).apply { submitQueue.add(this) }
+
+    /**
+     * @suppress
+     */
     override fun submit(task: Runnable?, result: V): Future<V> = super.submit(task, result).apply { submitQueue.add(this) }
 
     /**
