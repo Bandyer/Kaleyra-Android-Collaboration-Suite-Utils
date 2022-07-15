@@ -4,23 +4,21 @@
  */
 package com.kaleyra.collaboration_suite_utils.observer
 
-import com.badoo.mobile.util.WeakHandler
+import com.kaleyra.collaboration_suite_utils.ExecutorCancellableCompletionService
 import java.lang.reflect.InvocationHandler
 import java.lang.reflect.Method
 import java.util.concurrent.ConcurrentLinkedQueue
-import java.util.concurrent.ExecutorService
-import java.util.concurrent.Executors
 
 /**
  * Implementation of a Generic Observer Collection
  * @param T type of observers
- * @property callbackHandler WeakHandler? where all results will be posted
  * @property executor ExecutorService? where all requests will be submitted
  * @constructor
  * @author kristiyan
  */
-open class BaseObserverCollection<T>(private val callbackHandler: WeakHandler? = null,
-                                     private var executor: ExecutorService = Executors.newSingleThreadExecutor()) : InvocationHandler, ObserverCollection<T> {
+open class BaseObserverCollection<T>(
+    private var executor: ExecutorCancellableCompletionService<Any?>
+) : InvocationHandler, ObserverCollection<T> {
 
     @Volatile
     private var observersList = ConcurrentLinkedQueue<T>()
@@ -28,28 +26,34 @@ open class BaseObserverCollection<T>(private val callbackHandler: WeakHandler? =
     override fun forEach(item: (T) -> Unit) {
         executor.submit {
             observersList.forEach {
-                notifyUI { item(it) }
+                item(it)
             }
         }
     }
 
     override fun isEmpty(result: (Boolean) -> Unit) {
-        executor.submit { notifyUI { result(observersList.isEmpty()) } }
+        executor.submit {
+            result(observersList.isEmpty())
+        }
     }
 
     override fun size(result: (Int) -> Unit) {
-        executor.submit { notifyUI { result(observersList.size) } }
+        executor.submit {
+            result(observersList.size)
+        }
     }
 
     override fun contains(observer: T, result: (Boolean) -> Unit) {
-        executor.submit { notifyUI { result(observersList.any { it == observer }) } }
+        executor.submit {
+            result(observersList.any { it == observer })
+        }
     }
 
     override fun getObservers(result: (List<T>) -> Unit) {
         executor.submit {
             val list = mutableListOf<T>()
             observersList.forEach { list.add(it) }
-            notifyUI { result(list) }
+            result(list)
         }
     }
 
@@ -68,7 +72,7 @@ open class BaseObserverCollection<T>(private val callbackHandler: WeakHandler? =
 
     override fun remove(observer: T) {
         executor.submit {
-            val removeObj = observersList.firstOrNull { it == observer } ?: return@submit
+            val removeObj = observersList.firstOrNull { it == observer } ?: return@submit Unit
             observersList.remove(removeObj)
         }
     }
@@ -77,11 +81,6 @@ open class BaseObserverCollection<T>(private val callbackHandler: WeakHandler? =
         executor.submit {
             observersList.clear()
         }
-    }
-
-    private fun notifyUI(block: () -> Unit) {
-        if (callbackHandler == null) block.invoke()
-        else callbackHandler.post { block.invoke() }
     }
 
     private val methods: Array<Method> = ObserverCollection::class.java.methods
