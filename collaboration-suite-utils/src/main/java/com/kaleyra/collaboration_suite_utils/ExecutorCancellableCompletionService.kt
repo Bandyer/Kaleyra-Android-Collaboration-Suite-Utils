@@ -19,7 +19,7 @@ import java.util.concurrent.TimeUnit.MILLISECONDS
  *
  * @constructor
  */
-class ExecutorCancellableCompletionService<V, E : Executor>(
+open class ExecutorCancellableCompletionService<V, E : Executor>(
     val executor: E,
     private val submitQueue: LinkedBlockingQueue<Future<V>> = LinkedBlockingQueue(),
     private val completionQueue: LinkedBlockingQueue<Future<V>> = LinkedBlockingQueue()

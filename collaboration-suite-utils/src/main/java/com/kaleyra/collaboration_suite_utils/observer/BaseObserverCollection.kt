@@ -4,10 +4,10 @@
  */
 package com.kaleyra.collaboration_suite_utils.observer
 
-import com.kaleyra.collaboration_suite_utils.ExecutorCancellableCompletionService
 import java.lang.reflect.InvocationHandler
 import java.lang.reflect.Method
 import java.util.concurrent.ConcurrentLinkedQueue
+import java.util.concurrent.ExecutorCompletionService
 
 /**
  * Implementation of a Generic Observer Collection
@@ -17,7 +17,7 @@ import java.util.concurrent.ConcurrentLinkedQueue
  * @author kristiyan
  */
 open class BaseObserverCollection<T>(
-    private val executor: ExecutorCancellableCompletionService<Any?, *>
+    private val executor: ExecutorCompletionService<Any?>
 ) : InvocationHandler, ObserverCollection<T> {
 
     @Volatile

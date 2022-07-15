@@ -12,6 +12,7 @@ import com.kaleyra.collaboration_suite_utils.ExecutorsService.mainExecutor
 import com.kaleyra.collaboration_suite_utils.ExecutorsService.mainExecutorService
 import java.lang.reflect.Proxy
 import java.util.concurrent.Executor
+import java.util.concurrent.ExecutorCompletionService
 
 /**
  * A factory to create observers given a generic type
@@ -24,7 +25,7 @@ object ObserverFactory {
      * @param executor completion service executor
      * @return T the observer collection created
      */
-    inline fun <reified T> createObserverCollection(executor: ExecutorCancellableCompletionService<Any?, *> = mainExecutorService): T where T : ObserverCollection<*> {
+    inline fun <reified T> createObserverCollection(executor: ExecutorCompletionService<Any?> = mainExecutorService): T where T : ObserverCollection<*> {
         return Proxy.newProxyInstance(T::class.java.classLoader, arrayOf(T::class.java), BaseObserverCollection<T>(executor)) as T
     }
 }

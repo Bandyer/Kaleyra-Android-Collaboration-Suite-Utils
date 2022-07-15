@@ -12,16 +12,15 @@ import java.util.concurrent.Executor
 object ExecutorsService {
 
     /**
-     * Main executor service
-     */
-    val mainExecutorService: ExecutorCancellableCompletionService<Any?, HandlerExecutor> by lazy {
-        ExecutorCancellableCompletionService(mainExecutor)
-    }
-
-    /**
      * Main executor
      */
-    val mainExecutor by lazy { HandlerExecutor(HandlerCompat.createAsync(Looper.getMainLooper())) }
+    val mainExecutor = HandlerExecutor(HandlerCompat.createAsync(Looper.getMainLooper()))
+
+    /**
+     * Main executor service
+     */
+    val mainExecutorService: ExecutorCancellableCompletionService<Any?, HandlerExecutor> = create(mainExecutor)
+
 
     /**
      * Handler executor
@@ -62,5 +61,5 @@ object ExecutorsService {
      *
      * @param executor The executor to use for the service.
      */
-    fun <V> create(executor: Executor) = ExecutorCancellableCompletionService<V, Executor>(executor)
+    fun <V, E : Executor> create(executor: E) = ExecutorCancellableCompletionService<V, E>(executor)
 }
