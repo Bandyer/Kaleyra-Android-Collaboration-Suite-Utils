@@ -17,7 +17,7 @@ import java.util.concurrent.ConcurrentLinkedQueue
  * @author kristiyan
  */
 open class BaseObserverCollection<T>(
-    private var executor: ExecutorCancellableCompletionService<Any?>
+    private val executor: ExecutorCancellableCompletionService<Any?, *>
 ) : InvocationHandler, ObserverCollection<T> {
 
     @Volatile

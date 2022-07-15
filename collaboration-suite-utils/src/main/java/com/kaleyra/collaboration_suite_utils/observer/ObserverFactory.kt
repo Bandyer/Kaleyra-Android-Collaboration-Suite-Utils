@@ -4,8 +4,14 @@
  */
 package com.kaleyra.collaboration_suite_utils.observer
 
+import android.os.Looper
+import com.badoo.mobile.util.WeakHandler
 import com.kaleyra.collaboration_suite_utils.ExecutorCancellableCompletionService
+import com.kaleyra.collaboration_suite_utils.ExecutorsService
+import com.kaleyra.collaboration_suite_utils.ExecutorsService.mainExecutor
+import com.kaleyra.collaboration_suite_utils.ExecutorsService.mainExecutorService
 import java.lang.reflect.Proxy
+import java.util.concurrent.Executor
 
 /**
  * A factory to create observers given a generic type
@@ -18,7 +24,7 @@ object ObserverFactory {
      * @param executor completion service executor
      * @return T the observer collection created
      */
-    inline fun <reified T> createObserverCollection(executor: ExecutorCancellableCompletionService<Any?>): T where T : ObserverCollection<*> {
+    inline fun <reified T> createObserverCollection(executor: ExecutorCancellableCompletionService<Any?, *> = mainExecutorService): T where T : ObserverCollection<*> {
         return Proxy.newProxyInstance(T::class.java.classLoader, arrayOf(T::class.java), BaseObserverCollection<T>(executor)) as T
     }
 }
