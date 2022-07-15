@@ -4,14 +4,8 @@
  */
 package com.kaleyra.collaboration_suite_utils.observer
 
-import android.os.Looper
-import com.badoo.mobile.util.WeakHandler
-import com.kaleyra.collaboration_suite_utils.ExecutorCancellableCompletionService
-import com.kaleyra.collaboration_suite_utils.ExecutorsService
-import com.kaleyra.collaboration_suite_utils.ExecutorsService.mainExecutor
-import com.kaleyra.collaboration_suite_utils.ExecutorsService.mainExecutorService
+import com.kaleyra.collaboration_suite_utils.ExecutorsServiceFactory.mainExecutorService
 import java.lang.reflect.Proxy
-import java.util.concurrent.Executor
 import java.util.concurrent.ExecutorCompletionService
 
 /**

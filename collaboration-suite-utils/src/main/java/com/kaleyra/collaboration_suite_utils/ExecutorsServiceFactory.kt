@@ -7,20 +7,19 @@ import com.badoo.mobile.util.WeakHandler
 import java.util.concurrent.Executor
 
 /**
- * Executors service
+ * Executors service factory
  */
-object ExecutorsService {
+object ExecutorsServiceFactory {
 
     /**
      * Main executor
      */
-    val mainExecutor = HandlerExecutor(HandlerCompat.createAsync(Looper.getMainLooper()))
+    val mainExecutor by lazy { HandlerExecutor(HandlerCompat.createAsync(Looper.getMainLooper())) }
 
     /**
      * Main executor service
      */
-    val mainExecutorService: ExecutorCancellableCompletionService<Any?, HandlerExecutor> = create(mainExecutor)
-
+    val mainExecutorService: ExecutorCancellableCompletionService<Any?, HandlerExecutor> by lazy { create(mainExecutor) }
 
     /**
      * Handler executor
