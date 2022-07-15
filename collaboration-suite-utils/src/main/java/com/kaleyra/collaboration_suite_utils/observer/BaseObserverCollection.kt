@@ -4,10 +4,14 @@
  */
 package com.kaleyra.collaboration_suite_utils.observer
 
+import com.badoo.mobile.util.WeakHandler
+import com.kaleyra.collaboration_suite_utils.ExecutorsServiceFactory
 import java.lang.reflect.InvocationHandler
 import java.lang.reflect.Method
 import java.util.concurrent.ConcurrentLinkedQueue
 import java.util.concurrent.ExecutorCompletionService
+import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
 
 /**
  * Implementation of a Generic Observer Collection
@@ -16,9 +20,13 @@ import java.util.concurrent.ExecutorCompletionService
  * @constructor
  * @author kristiyan
  */
-open class BaseObserverCollection<T>(
+
+open class BaseObserverCollection<T> constructor(
     private val executor: ExecutorCompletionService<Any?>
 ) : InvocationHandler, ObserverCollection<T> {
+
+    @Deprecated("Deprecated since v2.1.0")
+    constructor(weakHandler: WeakHandler? = null, executorService: ExecutorService? = null) : this(weakHandler?.let { ExecutorsServiceFactory.create(it) } ?: ExecutorsServiceFactory.create(executorService ?: Executors.newSingleThreadExecutor()))
 
     @Volatile
     private var observersList = ConcurrentLinkedQueue<T>()
