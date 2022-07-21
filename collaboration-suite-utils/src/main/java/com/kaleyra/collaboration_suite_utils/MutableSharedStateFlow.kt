@@ -16,10 +16,16 @@ class MutableSharedStateFlow<T>(initialValue: T) : StateFlow<T> {
 
     private val flow: MutableSharedFlow<T> = MutableSharedFlow(replay = 1, extraBufferCapacity = 1) // give latest value to subscribers, and set a buffer of 1 value if subscribers are slow to collect
 
+    /**
+     * A snapshot of the replay cache.
+     **/
     override val replayCache = flow.replayCache
 
     private var lastValue: T = initialValue
 
+    /**
+     * The current value of this state flow.
+     **/
     override var value: T
         get() = flow.replayCache.last()
         set(value) {
