@@ -7,9 +7,12 @@ package com.kaleyra.collaboration_suite_utils
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import com.badoo.mobile.util.WeakHandler
+import io.mockk.MockK
 import io.mockk.MockKAnnotations
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.mockkConstructor
+import io.mockk.mockkStatic
 import java.util.concurrent.*
 
 open class BaseTest {
@@ -23,6 +26,9 @@ open class BaseTest {
     init {
         MockKAnnotations.init(this)
         every { context.applicationContext } returns applicationContext
+
+        mockkStatic(Executors::class)
+        every { Executors.newSingleThreadExecutor() } returns executor
 
         every { handler.post(any()) } answers {
             executor.execute(firstArg())

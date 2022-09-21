@@ -8,6 +8,7 @@ import com.badoo.mobile.util.WeakHandler
 import com.kaleyra.collaboration_suite_utils.ExecutorsServiceFactory
 import java.lang.reflect.InvocationHandler
 import java.lang.reflect.Method
+import java.util.concurrent.CancellationException
 import java.util.concurrent.ConcurrentLinkedQueue
 import java.util.concurrent.ExecutorCompletionService
 import java.util.concurrent.ExecutorService
@@ -25,73 +26,52 @@ open class BaseObserverCollection<T> constructor(
     private val executor: ExecutorCompletionService<Any?>
 ) : InvocationHandler, ObserverCollection<T> {
 
+    private var service: ExecutorService? = null
+
+    private val runExecutor = Executors.newSingleThreadExecutor()
+
     @Deprecated("Deprecated since v2.1.0")
-    constructor(weakHandler: WeakHandler? = null, executorService: ExecutorService? = null) : this(weakHandler?.let { ExecutorsServiceFactory.create(it) } ?: ExecutorsServiceFactory.create(executorService ?: Executors.newSingleThreadExecutor()))
+    constructor(weakHandler: WeakHandler? = null, executorService: ExecutorService? = null) : this(weakHandler?.let { ExecutorsServiceFactory.create(it) } ?: ExecutorsServiceFactory.create(executorService ?: Executors.newSingleThreadExecutor())) {
+        service = executorService
+    }
 
     @Volatile
     private var observersList = ConcurrentLinkedQueue<T>()
 
-    override fun forEach(item: (T) -> Unit) {
-        executor.submit {
-            observersList.forEach {
-                item(it)
-            }
-        }
+    override fun forEach(item: (T) -> Unit) = execute { observersList.forEach { item(it) } }
+
+    override fun isEmpty(result: (Boolean) -> Unit) = execute { result(observersList.isEmpty()) }
+
+    override fun size(result: (Int) -> Unit) = execute { result(observersList.size) }
+
+    override fun contains(observer: T, result: (Boolean) -> Unit) = execute { result(observersList.any { it == observer }) }
+
+    override fun getObservers(result: (List<T>) -> Unit) = execute {
+        val list = mutableListOf<T>()
+        observersList.forEach { list.add(it) }
+        result(list)
     }
 
-    override fun isEmpty(result: (Boolean) -> Unit) {
-        executor.submit {
-            result(observersList.isEmpty())
-        }
+    override fun set(obs: MutableList<T>) = execute {
+        clear()
+        observersList.addAll(obs)
     }
 
-    override fun size(result: (Int) -> Unit) {
-        executor.submit {
-            result(observersList.size)
-        }
-    }
+    override fun add(observer: T) = execute { observersList.add(observer) }
 
-    override fun contains(observer: T, result: (Boolean) -> Unit) {
-        executor.submit {
-            result(observersList.any { it == observer })
-        }
-    }
+    override fun remove(observer: T) = execute { observersList.remove(observer) }
 
-    override fun getObservers(result: (List<T>) -> Unit) {
-        executor.submit {
-            val list = mutableListOf<T>()
-            observersList.forEach { list.add(it) }
-            result(list)
-        }
-    }
-
-    override fun set(obs: MutableList<T>) {
-        executor.submit {
-            observersList.clear()
-            observersList.addAll(obs)
-        }
-    }
-
-    override fun add(observer: T) {
-        executor.submit {
-            observersList.add(observer)
-        }
-    }
-
-    override fun remove(observer: T) {
-        executor.submit {
-            val removeObj = observersList.firstOrNull { it == observer } ?: return@submit Unit
-            observersList.remove(removeObj)
-        }
-    }
-
-    override fun clear() {
-        executor.submit {
-            observersList.clear()
-        }
-    }
+    override fun clear() = execute { observersList.clear() }
 
     private val methods: Array<Method> = ObserverCollection::class.java.methods
+
+    private fun execute(block: () -> Unit) = runExecutor.execute {
+        try {
+            executor.submit(block).get()
+        } catch (_: CancellationException) {
+        } catch (_: InterruptedException) {
+        }
+    }
 
     /**
      * @suppress

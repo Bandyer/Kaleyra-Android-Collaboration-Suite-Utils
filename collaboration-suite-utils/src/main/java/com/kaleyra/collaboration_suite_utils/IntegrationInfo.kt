@@ -206,9 +206,15 @@ class LibInfo internal constructor(appPackageName: String) {
         private set
 
     init {
-        kotlin.runCatching {
-            val callerClassName = Thread.currentThread().stackTrace.last { (it.className.startsWith(companyPrefix) || it.className.startsWith(legacyCompanyPrefix)) && !it.className.startsWith(appPackageName) }.className
+        val stackTraces = Thread.currentThread().stackTrace.filter { (it.className.startsWith(companyPrefix) || it.className.startsWith(legacyCompanyPrefix)) && !it.className.startsWith(appPackageName) }
+        getFirstValidLibInfo(stackTraces)
+    }
 
+    private fun getFirstValidLibInfo(stackTraces: List<StackTraceElement>) {
+        if (stackTraces.isEmpty()) return
+        val callerTrace = stackTraces.last()
+        kotlin.runCatching {
+            val callerClassName = callerTrace.className
             val callerPackageName = Class.forName(callerClassName).`package`!!.name
                 .split(".")
                 .reduceUntil(
@@ -222,9 +228,9 @@ class LibInfo internal constructor(appPackageName: String) {
                 )
 
             val buildConfig = Class.forName("$callerPackageName.BuildConfig")
-            name = buildConfig.fields.firstOrNull { it.name == "APPLICATION_ID" || it.name == "LIBRARY_PACKAGE_NAME" }?.get(null).toString()
-            version = buildConfig.fields.firstOrNull { it.name == "VERSION_NAME" || it.name == "LIBRARY_VERSION_NAME" }?.get(null).toString()
-        }
+            name = buildConfig.fields.first { it.name == "LIBRARY_PACKAGE_NAME" }?.get(null).toString()
+            version = buildConfig.fields.first { it.name == "LIBRARY_VERSION_NAME" }?.get(null).toString()
+        }.onFailure { getFirstValidLibInfo(stackTraces.minus(callerTrace)) }
     }
 
     private inline fun <S, T : S> Iterable<T>.reduceUntil(condition: (acc: S) -> Boolean, operation: (acc: S, T) -> S): S {
