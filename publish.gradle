@@ -1,6 +1,6 @@
 ext.moduleGroupId = "com.kaleyra"
 ext.moduleProductId = "collaboration-suite-utils"
-ext.moduleVersion = "2.3.0"
+ext.moduleVersion = "2.3.1"
 
 ext.dryRun = true
 
