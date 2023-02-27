@@ -2,11 +2,12 @@
  *  Copyright (C) 2022 Kaleyra S.p.a. All Rights Reserved.
  *  See LICENSE.txt for licensing information
  */
+
 package com.kaleyra.collaboration_suite_utils.observer
 
 import android.os.Looper
-import com.badoo.mobile.util.WeakHandler
 import com.kaleyra.collaboration_suite_utils.ExecutorsServiceFactory.mainExecutorService
+import com.kaleyra.collaboration_suite_utils.WeakHandler
 import java.lang.reflect.Proxy
 import java.util.concurrent.ExecutorCompletionService
 import java.util.concurrent.ExecutorService

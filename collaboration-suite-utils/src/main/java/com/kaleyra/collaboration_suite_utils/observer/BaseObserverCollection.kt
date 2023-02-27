@@ -4,8 +4,8 @@
  */
 package com.kaleyra.collaboration_suite_utils.observer
 
-import com.badoo.mobile.util.WeakHandler
 import com.kaleyra.collaboration_suite_utils.ExecutorsServiceFactory
+import com.kaleyra.collaboration_suite_utils.WeakHandler
 import java.lang.reflect.InvocationHandler
 import java.lang.reflect.Method
 import java.util.concurrent.CancellationException

@@ -3,7 +3,6 @@ package com.kaleyra.collaboration_suite_utils
 import android.os.Handler
 import android.os.Looper
 import androidx.core.os.HandlerCompat
-import com.badoo.mobile.util.WeakHandler
 import java.util.concurrent.Executor
 
 /**
