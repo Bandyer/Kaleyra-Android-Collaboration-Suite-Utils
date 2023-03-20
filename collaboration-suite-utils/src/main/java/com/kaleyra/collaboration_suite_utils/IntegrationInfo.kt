@@ -24,7 +24,7 @@ class IntegrationInfo : Initializer<Unit> {
         /**
          * Lib info
          */
-        var libInfo by cached { LibInfo(appPackageName).takeIf { it.name != BuildConfig.LIBRARY_PACKAGE_NAME } }
+        var libInfo by cached { LibInfo(appPackageName) }
             private set
 
         /**
@@ -230,6 +230,7 @@ class LibInfo internal constructor(appPackageName: String) {
             val buildConfig = Class.forName("$callerPackageName.BuildConfig")
             name = buildConfig.fields.first { it.name == "LIBRARY_PACKAGE_NAME" }?.get(null).toString()
             version = buildConfig.fields.first { it.name == "LIBRARY_VERSION_NAME" }?.get(null).toString()
+            require(name != BuildConfig.LIBRARY_PACKAGE_NAME )
         }.onFailure { getFirstValidLibInfo(stackTraces.minus(callerTrace)) }
     }
 
