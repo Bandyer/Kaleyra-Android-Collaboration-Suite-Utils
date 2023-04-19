@@ -141,3 +141,12 @@ task reZipAar(type: Zip, dependsOn: 'addLicenseFileInUnzipedAar') {
 afterEvaluate {
     bundleReleaseAar.finalizedBy(reZipAar)
 }
+
+// workaround for mockk spyk(proxy)
+// https://mockk.io/doc/md/jdk16-access-exceptions.html
+tasks.withType(Test) {
+    jvmArgs(
+            "--add-opens", "java.base/java.time=ALL-UNNAMED",
+            "--add-opens", "java.base/java.lang.reflect=ALL-UNNAMED"
+    )
+}
