@@ -1,2 +1,19 @@
 include ':demo_app', ':collaboration-suite-utils'
 project(':demo_app').projectDir = file('release_app/demo_app/app')
+
+dependencyResolutionManagement {
+    repositories {
+        mavenLocal()
+        google()
+        mavenCentral()
+        maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
+        maven { url 'https://jitpack.io' }
+        maven { url 'https://maven.bandyer.com/releases' }
+    }
+
+    versionCatalogs {
+        create("catalog") {
+            from("com.kaleyra:version-catalog:1")
+        }
+    }
+}
