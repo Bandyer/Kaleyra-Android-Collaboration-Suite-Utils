@@ -30,7 +30,7 @@ android {
 
     defaultConfig {
         minSdkVersion catalog.versions.minSdkVersion.get()
-        targetSdkVersion catalog.versions.releaseAppSdkVersion.get().toInteger()
+        targetSdkVersion catalog.versions.sdkVersion.get().toInteger()
         versionCode 1
         versionName moduleVersion
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
