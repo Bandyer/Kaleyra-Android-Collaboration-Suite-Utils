@@ -4,7 +4,9 @@
  */
 package com.kaleyra.collaboration_suite_utils.proximity_listener
 
+import android.content.ContextWrapper
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.LifecycleOwner
 
 /**
  * ProximitySensor is implemented as a boolean-sensor and works based on the lifecycle of the binded activity.
@@ -39,7 +41,7 @@ interface ProximitySensor {
          * @return ProximitySensor interface
          */
         @kotlin.jvm.JvmOverloads
-        fun bind(context: AppCompatActivity, listener: ProximitySensorListener, debounceMillis: Long = 500): ProximitySensor {
+        fun <T> bind(context: T, listener: ProximitySensorListener, debounceMillis: Long = 500): ProximitySensor where T: ContextWrapper, T: LifecycleOwner {
             return ProximityReceiver(context, listener, debounceMillis)
         }
 
@@ -51,7 +53,7 @@ interface ProximitySensor {
          * @return ProximitySensor interface
          */
         @kotlin.jvm.JvmOverloads
-        fun <T> bind(context: T, debounceMillis: Long = 500): ProximitySensor where T : AppCompatActivity, T : ProximitySensorListener {
+        fun <T> bind(context: T, debounceMillis: Long = 500): ProximitySensor where T : ContextWrapper,  T: LifecycleOwner, T : ProximitySensorListener {
             return bind(context, context, debounceMillis)
         }
     }

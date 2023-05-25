@@ -7,7 +7,7 @@ package com.kaleyra.collaboration_suite_utils
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
-import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.LifecycleOwner
 
 /**
  * Abstract class for lifecycle events used also for single instances
@@ -19,12 +19,12 @@ object LifecyleBinder {
     /**
      * Bind the activity to the listener for lifecycle events
      *
-     * @param activity activity to bind
+     * @param lifecycleOwner activity to bind
      * @param lifecycleEvents listener for the events
      */
-    fun bind(activity: FragmentActivity, lifecycleEvents: LifecycleEvents) {
+    fun bind(lifecycleOwner: LifecycleOwner, lifecycleEvents: LifecycleEvents) {
 
-        activity.lifecycle.addObserver(object : LifecycleObserver, LifecycleEvents {
+        lifecycleOwner.lifecycle.addObserver(object : LifecycleObserver, LifecycleEvents {
 
             @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
             override fun create() {
@@ -54,7 +54,7 @@ object LifecyleBinder {
             @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
             override fun destroy() {
                 lifecycleEvents.destroy()
-                activity.lifecycle.removeObserver(this)
+                lifecycleOwner.lifecycle.removeObserver(this)
             }
         })
     }

@@ -5,6 +5,7 @@
 package com.kaleyra.collaboration_suite_utils.proximity_listener
 
 import android.content.Context
+import android.content.ContextWrapper
 import android.content.pm.PackageManager
 import android.hardware.Sensor
 import android.hardware.SensorEvent
@@ -13,6 +14,7 @@ import android.hardware.SensorManager
 import android.os.Build
 import android.os.CountDownTimer
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.LifecycleOwner
 import com.kaleyra.collaboration_suite_utils.*
 
 /**
@@ -24,7 +26,7 @@ import com.kaleyra.collaboration_suite_utils.*
  *
  * @param proximitySensorListener proximity sensor listener to notify when a change occurred.
  */
-internal class ProximityReceiver constructor(var context: AppCompatActivity?, private var proximitySensorListener: ProximitySensorListener, override var debounceMillis: Long = 500) : ProximitySensor, SensorEventListener, LifecycleEvents {
+internal class ProximityReceiver <T> constructor(var context: T?, private var proximitySensorListener: ProximitySensorListener, override var debounceMillis: Long = 500) : ProximitySensor, SensorEventListener, LifecycleEvents where T: LifecycleOwner, T: ContextWrapper {
 
     private val DEFAULT_BATCH_LATENCY = 190000
 
@@ -48,7 +50,6 @@ internal class ProximityReceiver constructor(var context: AppCompatActivity?, pr
      */
     init {
         LifecyleBinder.bind(context!!, this)
-
     }
 
     override fun create() {}
@@ -56,11 +57,7 @@ internal class ProximityReceiver constructor(var context: AppCompatActivity?, pr
     override fun start() {}
 
     override fun resume() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            sensorManager?.registerListener(this, proximitySensor, SensorManager.SENSOR_DELAY_NORMAL, DEFAULT_BATCH_LATENCY)
-        } else {
-            sensorManager?.registerListener(this, proximitySensor, SensorManager.SENSOR_DELAY_NORMAL)
-        }
+        sensorManager?.registerListener(this, proximitySensor, SensorManager.SENSOR_DELAY_NORMAL, DEFAULT_BATCH_LATENCY)
     }
 
     override fun stop() {
