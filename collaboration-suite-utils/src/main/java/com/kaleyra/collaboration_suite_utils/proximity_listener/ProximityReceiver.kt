@@ -54,10 +54,11 @@ internal class ProximityReceiver <T> constructor(var context: T?, private var pr
 
     override fun create() {}
 
-    override fun start() {}
+    override fun start() {
+        sensorManager?.registerListener(this, proximitySensor, SensorManager.SENSOR_DELAY_NORMAL, DEFAULT_BATCH_LATENCY)
+    }
 
     override fun resume() {
-        sensorManager?.registerListener(this, proximitySensor, SensorManager.SENSOR_DELAY_NORMAL, DEFAULT_BATCH_LATENCY)
     }
 
     override fun stop() {
