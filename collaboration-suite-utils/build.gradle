@@ -1,13 +1,13 @@
-import com.github.jk1.license.render.*
-
 /*
  *  Copyright (C) 2023 Kaleyra S.p.a. All Rights Reserved.
  *  See LICENSE.txt for licensing information
  */
 
+import com.github.jk1.license.render.*
+
 buildscript {
-    ext.licenseReportPluginVersion = "${catalog.plugins.licenseReportPluginVersion.get().version}"
-    ext.dokkaPluginVersion = "${catalog.plugins.dokkaPluginVersion.get().version}"
+    ext.licenseReportPluginVersion = "${catalog.plugins.licenseReport.get().version}"
+    ext.dokkaPluginVersion = "${catalog.plugins.dokka.get().version}"
 }
 
 plugins {
@@ -61,7 +61,7 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
     /*** Platform ***/
-    implementation catalog.appCompat
+    implementation catalog.appcompat
 
     /*** Lifecycle ***/
     implementation catalog.coroutines
@@ -70,10 +70,10 @@ dependencies {
     testImplementation catalog.junit
     testImplementation catalog.mockk
     testImplementation catalog.flowTestObserver
-    testImplementation catalog.coroutineTest
+    testImplementation catalog.coroutinesTest
 
     androidTestImplementation catalog.junitTestExt
-    androidTestImplementation(catalog.testEspressoCore, {
+    androidTestImplementation(catalog.androidxTestEspressoCore, {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
 
