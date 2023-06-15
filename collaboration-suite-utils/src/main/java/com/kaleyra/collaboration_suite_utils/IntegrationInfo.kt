@@ -140,7 +140,7 @@ class DeviceInfo : Initializer<String> {
     override fun create(context: Context): String {
         wrapperInfo = kotlin.runCatching {
             context.assets.open("kaleyra_video_wrapper_info.txt").bufferedReader().use { it.readText() }
-        }.getOrNull()?.split("/", limit = 2)?.map { it.trim().lowercase() }?.takeIf { it.size == 2 }
+        }.getOrNull()?.split("/", limit = 2)?.map { it.trim() }?.takeIf { it.size == 2 }
         return toString()
     }
 
