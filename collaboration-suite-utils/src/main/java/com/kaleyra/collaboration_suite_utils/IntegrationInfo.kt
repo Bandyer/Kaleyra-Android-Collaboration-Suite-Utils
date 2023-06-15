@@ -106,16 +106,43 @@ class DeviceInfo : Initializer<String> {
          */
         val fingerPrint: String = Build.FINGERPRINT
 
+        private var wrapperInfo: List<String>? = null
+
+        /**
+         * Wrapper name
+         */
+        val wrapperName by lazy { wrapperInfo?.get(0)?.takeIf { it.isNotBlank() && it.length <= 100 } }
+
+        /**
+         * Wrapper version
+         */
+        val wrapperVersion by lazy {
+            wrapperInfo?.get(1)?.takeIf {
+                it.isNotBlank() && it.matches(
+                    Regex(
+                        "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$"
+                    )
+                )
+            }
+        }
+
         /**
          * @suppress
          */
-        override fun toString() = "OS/Android/$platformOS Device/$name/$model ABIs/$arch API/$sdkVersion Fingerprint/${Build.FINGERPRINT}"
+        override fun toString() = "OS/Android/$platformOS Device/$name/$model ${
+            "Wrapper/$wrapperName/$wrapperVersion ".takeIf { wrapperName != null && wrapperVersion != null } ?: ""
+        }ABIs/$arch API/$sdkVersion Fingerprint/${Build.FINGERPRINT}"
     }
 
     /**
      * @suppress
      */
-    override fun create(context: Context) = toString()
+    override fun create(context: Context): String {
+        wrapperInfo = kotlin.runCatching {
+            context.assets.open("kaleyra_video_wrapper_info.txt").bufferedReader().use { it.readText() }
+        }.getOrNull()?.split("/", limit = 2)?.map { it.trim().lowercase() }?.takeIf { it.size == 2 }
+        return toString()
+    }
 
     /**
      * @suppress
@@ -230,7 +257,7 @@ class LibInfo internal constructor(appPackageName: String) {
             val buildConfig = Class.forName("$callerPackageName.BuildConfig")
             name = buildConfig.fields.first { it.name == "LIBRARY_PACKAGE_NAME" }?.get(null).toString()
             version = buildConfig.fields.first { it.name == "LIBRARY_VERSION_NAME" }?.get(null).toString()
-            require(name != BuildConfig.LIBRARY_PACKAGE_NAME )
+            require(name != BuildConfig.LIBRARY_PACKAGE_NAME)
         }.onFailure { getFirstValidLibInfo(stackTraces.minus(callerTrace)) }
     }
 
