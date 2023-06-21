@@ -1,5 +1,5 @@
 include ':demo_app', ':collaboration-suite-utils'
-project(':demo_app').projectDir = file('release_app/demo_app/app')
+project(':demo_app').projectDir = file('app')
 
 dependencyResolutionManagement {
     repositories {

@@ -365,10 +365,6 @@
             ]
         },
         {
-            "moduleName": "com.kaleyra:bom",
-            "moduleVersion": "1"
-        },
-        {
             "moduleName": "org.jetbrains.kotlin:kotlin-stdlib",
             "moduleVersion": "1.6.21",
             "moduleUrls": [

@@ -15,8 +15,8 @@ plugins {
     id "maven-publish"
     id "kotlin-android"
     id "kotlin-kapt"
-    id "org.jetbrains.dokka" version "$dokkaPluginVersion"
-    id 'com.github.jk1.dependency-license-report' version "$licenseReportPluginVersion"
+    alias(catalog.plugins.dokka)
+    alias(catalog.plugins.licenseReport)
 }
 
 
@@ -58,8 +58,6 @@ android {
 }
 
 dependencies {
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
-
     /*** Platform ***/
     implementation catalog.appcompat
 
@@ -79,10 +77,10 @@ dependencies {
 
     coreLibraryDesugaring catalog.desugar
 
-    api catalog.startupRuntime
+    api catalog.androidxStartupRuntime
 
     /*** Documentation ***/
-    dokkaHtmlPlugin(catalog.dokkaKotlinAsJava)
+    dokkaHtmlPlugin catalog.dokkaKotlinAsJava
 }
 
 licenseReport {
