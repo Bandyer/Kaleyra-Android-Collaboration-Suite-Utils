@@ -33,6 +33,22 @@ afterEvaluate {
                 version = moduleVersion
                 artifact kdocJar
                 artifact sourcesJar
+                pom {
+                    url.set("https://github.com/Bandyer/Kaleyra-Android-Collaboration-Suite-Utils")
+                    description.set("Collaboration Suite Utils")
+                    licenses {
+                        license {
+                            name.set("The Apache License, Version 2.0")
+                            url.set("http://www.apache.org/licenses/LICENSE-2.0.txt")
+                        }
+                    }
+                    developers {
+                        developer {
+                            id.set("Kaleyra Spa")
+                            name.set("Kaleyra Spa")
+                        }
+                    }
+                }
             }
         }
     }
