@@ -1,2 +1,24 @@
 include ':demo_app', ':collaboration-suite-utils'
-project(':demo_app').projectDir = file('release_app/demo_app/app')
+project(':demo_app').projectDir = file('app')
+
+dependencyResolutionManagement {
+    repositories {
+        mavenLocal()
+        google()
+        mavenCentral()
+        maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
+        maven { url 'https://jitpack.io' }
+        maven { url 'https://maven.bandyer.com/releases' }
+    }
+
+    enableFeaturePreview("VERSION_CATALOGS")
+    versionCatalogs {
+        create("catalog") {
+            from("com.kaleyra:video-sdk-version-catalog:2023.08.04")
+        }
+
+        create("sampleAppCatalog") {
+            from("com.kaleyra:video-app-version-catalog:2023.08.04")
+        }
+    }
+}

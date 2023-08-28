@@ -1,0 +1,42 @@
+plugins {
+    id "com.android.application"
+    id "maven-publish"
+    id "kotlin-android"
+    id "kotlin-kapt"
+}
+
+android {
+
+    compileSdkVersion sampleAppCatalog.versions.sampleAppSdkVersion.get().toInteger()
+    buildToolsVersion sampleAppCatalog.versions.sampleAppToolsVersion.get()
+
+    defaultConfig {
+        applicationId "com.kaleyra.collaboration_suite_utils.demo_app"
+        minSdkVersion sampleAppCatalog.versions.sampleAppMinSdkVersion.get().toInteger()
+        targetSdkVersion sampleAppCatalog.versions.sampleAppSdkVersion.get().toInteger()
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    /*** Platform ***/
+    implementation sampleAppCatalog.appcompat
+    implementation sampleAppCatalog.material
+    implementation sampleAppCatalog.androidxConstraintLayout
+
+    /***  Testing ***/
+    testImplementation sampleAppCatalog.junit
+    androidTestImplementation sampleAppCatalog.junitTestExt
+    androidTestImplementation catalog.androidxTestEspressoCore
+
+    /*** Library ***/
+    implementation(project(':collaboration-suite-utils'))
+}
