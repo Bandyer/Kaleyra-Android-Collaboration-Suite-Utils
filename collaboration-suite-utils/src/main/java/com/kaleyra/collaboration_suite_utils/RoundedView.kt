@@ -176,12 +176,12 @@ interface RoundedView : Roundable {
 /**
  * Property specifying the rounding factor
  */
-private var <T> T.mRadius: Float where T : View, T : Roundable  by FieldProperty { -1f }
+private var <T> T.mRadius: Float where T : View, T : Roundable  by FieldProperty<Roundable, Float> { -1f }
 
 /**
  * Make the view rounded like a circle
  */
-private var <T> T.mIsRounded: Boolean where T : View, T : Roundable  by FieldProperty { false }
+private var <T> T.mIsRounded: Boolean where T : View, T : Roundable  by FieldProperty<Roundable, Boolean> { false }
 
 /**
  * Radius based on measured width/height
@@ -193,7 +193,7 @@ private val <T> T.measuredRadius: Float where T : android.view.View, T : Roundab
 /**
  * Current clipping path
  */
-private val <T> T.clipPath: Path? where T : android.view.View, T : Roundable   by FieldProperty {
+private val <T> T.clipPath: Path? where T : android.view.View, T : Roundable   by FieldProperty<Roundable, Path?> {
     if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) Path() else null
 }
 
