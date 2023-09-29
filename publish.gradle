@@ -1,6 +1,6 @@
 ext.moduleGroupId = "com.kaleyra"
-ext.moduleProductId = "collaboration-suite-utils"
-ext.moduleVersion = "3.0.6"
+ext.moduleProductId = "video-utils"
+ext.moduleVersion = "1.0.0"
 
 ext.dryRun = true
 
@@ -35,7 +35,7 @@ afterEvaluate {
                 artifact sourcesJar
                 pom {
                     url.set("https://github.com/Bandyer/Kaleyra-Android-Collaboration-Suite-Utils")
-                    description.set("Collaboration Suite Utils")
+                    description.set("Kaleyra Video Utils")
                     licenses {
                         license {
                             name.set("The Apache License, Version 2.0")

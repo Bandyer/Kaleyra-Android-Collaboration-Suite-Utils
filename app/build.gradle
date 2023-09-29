@@ -11,7 +11,7 @@ android {
     buildToolsVersion sampleAppCatalog.versions.sampleAppToolsVersion.get()
 
     defaultConfig {
-        applicationId "com.kaleyra.collaboration_suite_utils.demo_app"
+        applicationId "com.kaleyra.demo_app"
         minSdkVersion sampleAppCatalog.versions.sampleAppMinSdkVersion.get().toInteger()
         targetSdkVersion sampleAppCatalog.versions.sampleAppSdkVersion.get().toInteger()
         versionCode 1
@@ -38,5 +38,5 @@ dependencies {
     androidTestImplementation catalog.androidxTestEspressoCore
 
     /*** Library ***/
-    implementation(project(':collaboration-suite-utils'))
+    implementation project(':video-utils')
 }
