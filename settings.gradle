@@ -9,16 +9,16 @@ dependencyResolutionManagement {
         maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
         maven { url 'https://jitpack.io' }
         maven { url 'https://maven.bandyer.com/releases' }
+        maven { url 'https://maven.bandyer.com/prebuilts' }
     }
 
-    enableFeaturePreview("VERSION_CATALOGS")
     versionCatalogs {
         create("catalog") {
-            from("com.kaleyra:video-sdk-version-catalog:2023.09.03")
+            from("com.kaleyra:video-sdk-version-catalog:2023.10.00")
         }
 
         create("sampleAppCatalog") {
-            from("com.kaleyra:video-app-version-catalog:2023.09.03")
+            from("com.kaleyra:video-app-version-catalog:2023.10.00")
         }
     }
 }

@@ -9,7 +9,6 @@ plugins {
     id "com.android.library"
     id "maven-publish"
     id "kotlin-android"
-    id "kotlin-kapt"
     alias(catalog.plugins.dokka)
     alias(catalog.plugins.licenseReport)
 }
@@ -20,6 +19,7 @@ apply from: "../licenses.gradle"
 
 android {
 
+    namespace "com.kaleyra.collaboration_suite_utils"
     compileSdkVersion catalog.versions.sdkVersion.get().toInteger()
     buildToolsVersion catalog.versions.toolsVersion.get()
 
@@ -44,11 +44,25 @@ android {
         }
     }
 
+    buildFeatures {
+        buildConfig = true
+    }
+
     compileOptions {
         // Flag to enable support for the new language APIs
         coreLibraryDesugaringEnabled true
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+
+    publishing {
+        singleVariant('release') {
+            withJavadocJar()
+        }
     }
 }
 

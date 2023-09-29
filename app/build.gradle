@@ -7,6 +7,7 @@ plugins {
 
 android {
 
+    namespace "com.kaleyra.collaboration_suite_utils.demo_app"
     compileSdkVersion sampleAppCatalog.versions.sampleAppSdkVersion.get().toInteger()
     buildToolsVersion sampleAppCatalog.versions.sampleAppToolsVersion.get()
 
@@ -24,6 +25,14 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
 }
 
 dependencies {
@@ -39,4 +48,5 @@ dependencies {
 
     /*** Library ***/
     implementation project(':video-utils')
+//    implementation "com.kaleyra:video-utils:2.0.0"
 }

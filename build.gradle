@@ -6,8 +6,10 @@ buildscript {
         mavenCentral()
         gradlePluginPortal()
         maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
+        maven { url "https://s01.oss.sonatype.org/content/repositories/snapshots" }
         maven { url 'https://jitpack.io' }
         maven { url 'https://maven.bandyer.com/releases' }
+        maven { url 'https://maven.bandyer.com/prebuilts' }
         maven { url "https://maven.pkg.jetbrains.space/public/p/kotlinx-html/maven" }
         maven { url "https://plugins.gradle.org/m2/" }
     }
@@ -27,8 +29,10 @@ allprojects {
         mavenCentral()
         gradlePluginPortal()
         maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
+        maven { url "https://s01.oss.sonatype.org/content/repositories/snapshots" }
         maven { url 'https://jitpack.io' }
         maven { url 'https://maven.bandyer.com/releases' }
+        maven { url 'https://maven.bandyer.com/prebuilts' }
         maven { url "https://maven.pkg.jetbrains.space/public/p/kotlinx-html/maven" }
         maven { url "https://plugins.gradle.org/m2/" }
     }
