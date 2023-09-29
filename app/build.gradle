@@ -7,7 +7,7 @@ plugins {
 
 android {
 
-    namespace "com.kaleyra.collaboration_suite_utils.demo_app"
+    namespace "com.kaleyra.demo_app"
     compileSdkVersion sampleAppCatalog.versions.sampleAppSdkVersion.get().toInteger()
     buildToolsVersion sampleAppCatalog.versions.sampleAppToolsVersion.get()
 
