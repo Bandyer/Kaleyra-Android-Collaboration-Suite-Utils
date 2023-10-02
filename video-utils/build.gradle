@@ -19,7 +19,7 @@ apply from: "../licenses.gradle"
 
 android {
 
-    namespace "com.kaleyra.collaboration_suite_utils"
+    namespace "com.kaleyra.video_utils"
     compileSdkVersion catalog.versions.sdkVersion.get().toInteger()
     buildToolsVersion catalog.versions.toolsVersion.get()
 
