@@ -55,19 +55,18 @@ afterEvaluate {
     }
 }
 
-task invalidateCache(type: Exec) {
-    workingDir '../scripts'
-    def publishPath = "releases"
-    def packageName = moduleGroupId + "." + project.getName()
-    commandLine 'python3', './invalidate_s3_cache.py', mavenAccessKey, mavenSecretKey, mavenDistributionId, publishPath, packageName, version
-}
-
 task publishUpload {
     def publishTask = 'publishToMavenLocal'
     if (!dryRun) publishTask = 'publish'
     dependsOn publishTask
-    dependsOn 'invalidateCache'
-    tasks.findByName('invalidateCache').mustRunAfter publishTask
+}
+
+task invalidateCache(type: Exec, dependsOn: publishUpload) {
+    workingDir '../scripts'
+    def publishPath = "releases"
+    def packageName = moduleGroupId + "." + project.getName()
+    commandLine 'python3', './invalidate_s3_cache.py', mavenAccessKey, mavenSecretKey, mavenDistributionId, publishPath, packageName, version
+    doLast { println("Invalidated $project.name maven cache.") }
 }
 
 dokkaHtml {
@@ -102,6 +101,10 @@ task sourcesJar(type: Jar) {
     archiveClassifier.set("sources")
 }
 
+afterEvaluate {
+    tasks["invalidateCache"].dependsOn(tasks.getByName("publishUpload"))
+    publishUpload.finalizedBy(invalidateCache)
+}
 
 artifacts {
     archives kdocJar
