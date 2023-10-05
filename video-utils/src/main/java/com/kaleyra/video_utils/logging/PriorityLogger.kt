@@ -7,7 +7,7 @@ package com.kaleyra.video_utils.logging
 import android.os.Build
 import androidx.annotation.NonNull
 import androidx.annotation.Nullable
-import com.kaleyra.collaboration_suite_utils.BuildConfig
+import com.kaleyra.video_utils.BuildConfig
 import com.kaleyra.video_utils.logging.BaseLogger.Priority.DEBUG
 import com.kaleyra.video_utils.logging.BaseLogger.Priority.ERROR
 import com.kaleyra.video_utils.logging.BaseLogger.Priority.INFO

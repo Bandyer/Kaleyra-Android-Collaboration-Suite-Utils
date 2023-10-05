@@ -8,7 +8,6 @@ import android.content.Context
 import android.os.Build
 import android.os.Build.VERSION
 import androidx.startup.Initializer
-import com.kaleyra.collaboration_suite_utils.BuildConfig
 
 /**
  * IntegrationInfo representing the library, app and device details
