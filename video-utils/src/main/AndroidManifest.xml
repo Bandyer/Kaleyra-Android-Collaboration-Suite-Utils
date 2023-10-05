@@ -4,7 +4,7 @@
   -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.kaleyra.collaboration_suite_utils">
+    package="com.kaleyra.video_utils">
 
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
