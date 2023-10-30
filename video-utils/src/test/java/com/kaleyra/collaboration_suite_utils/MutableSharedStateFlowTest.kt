@@ -39,7 +39,7 @@ class MutableSharedStateFlowTest : BaseTest() {
 
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
-    fun collectAllChanges2() = runTest {
+    fun testFlowValuesEmittedNearEachOther() = runTest {
         val stateFlow = MutableSharedStateFlow("ciao0")
 
         val result = mutableListOf<String>()
