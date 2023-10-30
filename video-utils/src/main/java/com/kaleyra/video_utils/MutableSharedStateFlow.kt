@@ -38,7 +38,7 @@ class MutableSharedStateFlow<T>(initialValue: T) : StateFlow<T>, MutableSharedFl
         get() {
             return runBlocking {
                 mutex.withLock {
-                    replayCache.last()
+                    flow.replayCache.last()
                 }
             }
         }
