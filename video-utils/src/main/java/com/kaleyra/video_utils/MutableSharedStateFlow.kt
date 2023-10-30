@@ -1,15 +1,18 @@
 package com.kaleyra.video_utils
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 
 /**
- *  It's a MutableStateFlow that emits all values
+ *  It's a MutableStateFlow that emits all values,
+ *  N.B. use it only on background threads since it will may lock the caller's thread on set and get value
  *
  *  @constructor
  *  @param T type of value to emit
@@ -17,7 +20,7 @@ import kotlinx.coroutines.flow.StateFlow
  **/
 class MutableSharedStateFlow<T>(initialValue: T) : StateFlow<T>, MutableSharedFlow<T> {
 
-    private val flow: MutableSharedFlow<T> = MutableSharedFlow(replay = 1, extraBufferCapacity = 1) // give latest value to subscribers, and set a buffer of 1 value if subscribers are slow to collect
+    private val flow: MutableSharedFlow<T> = MutableSharedFlow(replay = 1, extraBufferCapacity = 100) // give latest value to subscribers, and set a buffer of 1 value if subscribers are slow to collect
 
     /**
      * A snapshot of the replay cache.
@@ -26,21 +29,32 @@ class MutableSharedStateFlow<T>(initialValue: T) : StateFlow<T>, MutableSharedFl
 
     private var lastValue: T = initialValue
 
+    private val mutex = Mutex()
+
     /**
      * The current value of this state flow.
      **/
     override var value: T
-        get() = flow.replayCache.last()
+        get() {
+            return runBlocking {
+                mutex.withLock {
+                    replayCache.last()
+                }
+            }
+        }
         set(value) {
-            if (value == lastValue) return
-            lastValue = value
-            flow.tryEmit(value)
+            runBlocking {
+                mutex.withLock {
+                    if (value == lastValue) return@withLock
+                    lastValue = value
+                    flow.emit(value)
+                }
+            }
         }
 
     /**
      * @suppress
      */
-    @OptIn(InternalCoroutinesApi::class)
     override suspend fun collect(collector: FlowCollector<T>) = flow.collect(collector)
 
     init {
