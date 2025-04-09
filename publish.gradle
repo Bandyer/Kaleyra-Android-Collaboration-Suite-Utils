@@ -1,6 +1,6 @@
 ext.moduleGroupId = "com.kaleyra"
 ext.moduleProductId = "video-utils"
-ext.moduleVersion = "2.0.2"
+ext.moduleVersion = "2.1.0"
 
 ext.dryRun = true
 
